@@ -1,0 +1,17 @@
+name: Sync App Offers
+
+on:
+  push:
+    paths: ["feed.json"]      # أي تحديث للملف → مزامنة فورية
+  schedule:
+    - cron: "0 */6 * * *"     # احتياط: كل 6 ساعات
+  workflow_dispatch: {}       # زر تشغيل يدوي
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger app sync
+        run: |
+          curl -sS -X POST "${{ secrets.SITE_URL }}/api/public/sync-offers" \
+            -H "x-sync-token: ${{ secrets.OFFERS_SYNC_TOKEN }}"
