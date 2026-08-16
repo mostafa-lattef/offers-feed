@@ -1,0 +1,27 @@
+{
+  "items": [
+    {
+      "id": "AL-001",
+      "title": "Wireless Earbuds Pro",
+      "title_ar": "سماعات لاسلكية برو",
+      "description": "Noise cancelling earbuds",
+      "price": 29.99,
+      "old_price": 49.99,
+      "currency": "USD",
+      "image": "https://picsum.photos/seed/earbuds/400",
+      "url": "https://example.com/earbuds",
+      "category": "Electronics"
+    },
+    {
+      "id": "AL-002",
+      "title": "Smart Watch X2",
+      "title_ar": "ساعة ذكية X2",
+      "price": 45,
+      "old_price": 70,
+      "currency": "USD",
+      "image": "https://picsum.photos/seed/watch/400",
+      "url": "https://example.com/watch",
+      "category": "Electronics"
+    }
+  ]
+}
