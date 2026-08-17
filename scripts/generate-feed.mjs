@@ -161,7 +161,7 @@ for (let c = 0; c < cats.length; c++) {
     const g = isFallback ? c : matchGroup(cat);
     const ph = g >= 0
       ? PLACEHOLDER_PRODUCTS.filter((x) => x.cat === g)
-      : [1, 2].map((n) => ({ title: `${cat.name_en} Pick ${n}`, title_ar: `${cat.name_ar} — مختار ${n}`, price: pr, old_price: Math.round(pr * 1.6), image: cat.image_url;
+      : [1, 2].map((n) => ({ title: `${cat.name_en} Pick ${n}`, title_ar: `${cat.name_ar} — مختار ${n}`, price: 0, old_price: null, image: cat.image_url }));
     ph.forEach((p, i) => {
       items.push({
         id: `alb-ph-${c}-${i}`,
