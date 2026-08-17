@@ -1,10 +1,5 @@
 import { writeFileSync } from "node:fs";
 
-/**
- * مولّد feed.json — يحاول سحب أصناف ومنتجات حقيقية من علي بابا،
- * وعند التعذر يستخدم بيانات احتياطية واقعية. التفاصيل في سجل الـ Workflow.
- */
-
 const UA = {
   "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
   "Accept-Language": "ar,en;q=0.9",
@@ -43,6 +38,21 @@ const PLACEHOLDER_PRODUCTS = [
   { cat: 8, title: "Classic Wrist Watch", title_ar: "ساعة يد كلاسيكية", price: 35, old_price: 60, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500" },
   { cat: 8, title: "Silver Ring", title_ar: "خاتم فضي", price: 8.9, old_price: 15, image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=500" },
 ];
+
+// مطابقة الصنف الحي بأقرب مجموعة منتجات جاهزة
+function matchGroup(cat) {
+  const t = `${cat.name_ar} ${cat.name_en}`;
+  if (/هاتف|هواتف|جوال|جوالات|اتصالات/.test(t)) return 7;
+  if (/ملابس|أزياء|نسائ|رجال|موضة|أحذية|حقائب/.test(t)) return 0;
+  if (/كمبيوتر|حاسوب|إلكترون|الكترون|كهربائ|صوتيات/.test(t)) return 1;
+  if (/منزل|منزلي|مطبخ|حديق|أثاث|ديكور|إنارة/.test(t)) return 2;
+  if (/جمال|تجميل|عناية|مكياج|عطور/.test(t)) return 3;
+  if (/آلات|صناع|زراع|معدات|عدد/.test(t)) return 4;
+  if (/رياض|ترفيه|ألعاب|لياقة|تخييم/.test(t)) return 5;
+  if (/سيار|مركب|دراج|قطع غيار/.test(t)) return 6;
+  if (/مجوهر|ساعات|خواتم|فضة|ذهب/.test(t)) return 8;
+  return -1;
+}
 
 function cleanAndFormatCategory(rawName) {
   let cleanAr = rawName
@@ -98,7 +108,6 @@ async function scrapeProducts(query) {
     const html = await fetchText(`https://arabic.alibaba.com/trade/search?SearchText=${encodeURIComponent(query)}`);
     const found = [];
     let m;
-    // الاستراتيجية 1: بيانات JSON مضمّنة في الصفحة
     const objRe = /{[^{}]*"subject"\s*:\s*"[^"]+"[^{}]*}/g;
     while ((m = objRe.exec(html)) !== null) {
       const chunk = m[0];
@@ -109,7 +118,6 @@ async function scrapeProducts(query) {
       if (title) found.push({ title, price: price ? Number(price) : null, img: img || null, link: link || null });
       if (found.length >= 2) break;
     }
-    // الاستراتيجية 2: روابط صفحات المنتج في HTML
     if (found.length === 0) {
       const aRe = /<a\b[^>]*href="((?:https?:)?\/\/[^"]*\/product\/[^"]+)"[^>]*>([\s\S]*?)<\/a>/gi;
       while ((m = aRe.exec(html)) !== null) {
@@ -150,9 +158,10 @@ for (let c = 0; c < cats.length; c++) {
     });
     console.log(`✅ ${cat.name_ar}: تم سحب ${live.length} منتج حقيقي`);
   } else {
-    const ph = isFallback
-      ? PLACEHOLDER_PRODUCTS.filter((x) => x.cat === c)
-      : [1, 2].map((n) => ({ title: `${cat.name_en} Pick ${n}`, title_ar: `${cat.name_ar} — مختار ${n}`, price: 0, old_price: null, image: cat.image_url }));
+    const g = isFallback ? c : matchGroup(cat);
+    const ph = g >= 0
+      ? PLACEHOLDER_PRODUCTS.filter((x) => x.cat === g)
+      : [1, 2].map((n) => ({ title: `${cat.name_en} Pick ${n}`, title_ar: `${cat.name_ar} — مختار ${n}`, price: pr, old_price: Math.round(pr * 1.6), image: cat.image_url;
     ph.forEach((p, i) => {
       items.push({
         id: `alb-ph-${c}-${i}`,
