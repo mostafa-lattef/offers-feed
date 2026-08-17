@@ -1,27 +1,224 @@
 {
   "items": [
     {
-      "id": "AL-001",
-      "title": "Wireless Earbuds Pro",
-      "title_ar": "سماعات لاسلكية برو",
-      "description": "Noise cancelling earbuds",
-      "price": 29.99,
-      "old_price": 49.99,
+      "id": "alb-ph-0-0",
+      "title": "Smartphones & Mobile Pick 1",
+      "title_ar": "هاتف ذكي 5G — مختار 1",
+      "description_ar": "منتج مميز من قسم هاتف ذكي 5G",
+      "price": 0,
       "currency": "USD",
-      "image": "https://picsum.photos/seed/earbuds/400",
-      "url": "https://example.com/earbuds",
-      "category": "Electronics"
+      "image": "https://sc01.alicdn.com/kf/H02804edf2b384e8e94eef023949c846as.jpg",
+      "url": "https://arabic.alibaba.com/trade/search?SearchText=%D9%87%D8%A7%D8%AA%D9%81%20%D8%B0%D9%83%D9%8A%205G",
+      "category": "Smartphones & Mobile"
     },
     {
-      "id": "AL-002",
-      "title": "Smart Watch X2",
-      "title_ar": "ساعة ذكية X2",
-      "price": 45,
-      "old_price": 70,
+      "id": "alb-ph-0-1",
+      "title": "Smartphones & Mobile Pick 2",
+      "title_ar": "هاتف ذكي 5G — مختار 2",
+      "description_ar": "منتج مميز من قسم هاتف ذكي 5G",
+      "price": 0,
       "currency": "USD",
-      "image": "https://picsum.photos/seed/watch/400",
-      "url": "https://example.com/watch",
-      "category": "Electronics"
+      "image": "https://sc01.alicdn.com/kf/H02804edf2b384e8e94eef023949c846as.jpg",
+      "url": "https://arabic.alibaba.com/trade/search?SearchText=%D9%87%D8%A7%D8%AA%D9%81%20%D8%B0%D9%83%D9%8A%205G",
+      "category": "Smartphones & Mobile"
+    },
+    {
+      "id": "alb-ph-1-0",
+      "title": "فساتين السهرة Pick 1",
+      "title_ar": "فساتين السهرة — مختار 1",
+      "description_ar": "منتج مميز من قسم فساتين السهرة",
+      "price": 0,
+      "currency": "USD",
+      "image": "https://sc01.alicdn.com/kf/Hb988d4c8cee547f2bc614ebdea8ebc16k.jpg",
+      "url": "https://arabic.alibaba.com/trade/search?SearchText=%D9%81%D8%B3%D8%A7%D8%AA%D9%8A%D9%86%20%D8%A7%D9%84%D8%B3%D9%87%D8%B1%D8%A9",
+      "category": "فساتين السهرة"
+    },
+    {
+      "id": "alb-ph-1-1",
+      "title": "فساتين السهرة Pick 2",
+      "title_ar": "فساتين السهرة — مختار 2",
+      "description_ar": "منتج مميز من قسم فساتين السهرة",
+      "price": 0,
+      "currency": "USD",
+      "image": "https://sc01.alicdn.com/kf/Hb988d4c8cee547f2bc614ebdea8ebc16k.jpg",
+      "url": "https://arabic.alibaba.com/trade/search?SearchText=%D9%81%D8%B3%D8%A7%D8%AA%D9%8A%D9%86%20%D8%A7%D9%84%D8%B3%D9%87%D8%B1%D8%A9",
+      "category": "فساتين السهرة"
+    },
+    {
+      "id": "alb-ph-2-0",
+      "title": "جينز للرجال Pick 1",
+      "title_ar": "جينز للرجال — مختار 1",
+      "description_ar": "منتج مميز من قسم جينز للرجال",
+      "price": 0,
+      "currency": "USD",
+      "image": "https://sc01.alicdn.com/kf/Ac1448275aad448bb835c57afae49f3a62.jpg",
+      "url": "https://arabic.alibaba.com/trade/search?SearchText=%D8%AC%D9%8A%D9%86%D8%B2%20%D9%84%D9%84%D8%B1%D8%AC%D8%A7%D9%84",
+      "category": "جينز للرجال"
+    },
+    {
+      "id": "alb-ph-2-1",
+      "title": "جينز للرجال Pick 2",
+      "title_ar": "جينز للرجال — مختار 2",
+      "description_ar": "منتج مميز من قسم جينز للرجال",
+      "price": 0,
+      "currency": "USD",
+      "image": "https://sc01.alicdn.com/kf/Ac1448275aad448bb835c57afae49f3a62.jpg",
+      "url": "https://arabic.alibaba.com/trade/search?SearchText=%D8%AC%D9%8A%D9%86%D8%B2%20%D9%84%D9%84%D8%B1%D8%AC%D8%A7%D9%84",
+      "category": "جينز للرجال"
+    },
+    {
+      "id": "alb-ph-3-0",
+      "title": "Auto Accessories Pick 1",
+      "title_ar": "سيارات — مختار 1",
+      "description_ar": "منتج مميز من قسم سيارات",
+      "price": 0,
+      "currency": "USD",
+      "image": "https://sc01.alicdn.com/kf/H51b4dca75f40485b9e1f966bac58638al.jpg",
+      "url": "https://arabic.alibaba.com/trade/search?SearchText=%D8%B3%D9%8A%D8%A7%D8%B1%D8%A7%D8%AA",
+      "category": "Auto Accessories"
+    },
+    {
+      "id": "alb-ph-3-1",
+      "title": "Auto Accessories Pick 2",
+      "title_ar": "سيارات — مختار 2",
+      "description_ar": "منتج مميز من قسم سيارات",
+      "price": 0,
+      "currency": "USD",
+      "image": "https://sc01.alicdn.com/kf/H51b4dca75f40485b9e1f966bac58638al.jpg",
+      "url": "https://arabic.alibaba.com/trade/search?SearchText=%D8%B3%D9%8A%D8%A7%D8%B1%D8%A7%D8%AA",
+      "category": "Auto Accessories"
+    },
+    {
+      "id": "alb-ph-4-0",
+      "title": "احذية رجالية Pick 1",
+      "title_ar": "احذية رجالية — مختار 1",
+      "description_ar": "منتج مميز من قسم احذية رجالية",
+      "price": 0,
+      "currency": "USD",
+      "image": "https://sc01.alicdn.com/kf/Hee13c425d1914f2593c17094f5da1b2aj.jpg",
+      "url": "https://arabic.alibaba.com/trade/search?SearchText=%D8%A7%D8%AD%D8%B0%D9%8A%D8%A9%20%D8%B1%D8%AC%D8%A7%D9%84%D9%8A%D8%A9",
+      "category": "احذية رجالية"
+    },
+    {
+      "id": "alb-ph-4-1",
+      "title": "احذية رجالية Pick 2",
+      "title_ar": "احذية رجالية — مختار 2",
+      "description_ar": "منتج مميز من قسم احذية رجالية",
+      "price": 0,
+      "currency": "USD",
+      "image": "https://sc01.alicdn.com/kf/Hee13c425d1914f2593c17094f5da1b2aj.jpg",
+      "url": "https://arabic.alibaba.com/trade/search?SearchText=%D8%A7%D8%AD%D8%B0%D9%8A%D8%A9%20%D8%B1%D8%AC%D8%A7%D9%84%D9%8A%D8%A9",
+      "category": "احذية رجالية"
+    },
+    {
+      "id": "alb-ph-5-0",
+      "title": "دراجة Pick 1",
+      "title_ar": "دراجة — مختار 1",
+      "description_ar": "منتج مميز من قسم دراجة",
+      "price": 0,
+      "currency": "USD",
+      "image": "https://sc01.alicdn.com/kf/H024b1bf96b6842fbafe0ff889c260cbbz.jpg",
+      "url": "https://arabic.alibaba.com/trade/search?SearchText=%D8%AF%D8%B1%D8%A7%D8%AC%D8%A9",
+      "category": "دراجة"
+    },
+    {
+      "id": "alb-ph-5-1",
+      "title": "دراجة Pick 2",
+      "title_ar": "دراجة — مختار 2",
+      "description_ar": "منتج مميز من قسم دراجة",
+      "price": 0,
+      "currency": "USD",
+      "image": "https://sc01.alicdn.com/kf/H024b1bf96b6842fbafe0ff889c260cbbz.jpg",
+      "url": "https://arabic.alibaba.com/trade/search?SearchText=%D8%AF%D8%B1%D8%A7%D8%AC%D8%A9",
+      "category": "دراجة"
+    },
+    {
+      "id": "alb-ph-6-0",
+      "title": "الدراجات البخارية الكهربائية Pick 1",
+      "title_ar": "الدراجات البخارية الكهربائية — مختار 1",
+      "description_ar": "منتج مميز من قسم الدراجات البخارية الكهربائية",
+      "price": 0,
+      "currency": "USD",
+      "image": "https://sc01.alicdn.com/kf/H9b3243b35aae468eb6d8c7923bea31e5Q.jpg",
+      "url": "https://arabic.alibaba.com/trade/search?SearchText=%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D8%AC%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A8%D8%AE%D8%A7%D8%B1%D9%8A%D8%A9%20%D8%A7%D9%84%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A6%D9%8A%D8%A9",
+      "category": "الدراجات البخارية الكهربائية"
+    },
+    {
+      "id": "alb-ph-6-1",
+      "title": "الدراجات البخارية الكهربائية Pick 2",
+      "title_ar": "الدراجات البخارية الكهربائية — مختار 2",
+      "description_ar": "منتج مميز من قسم الدراجات البخارية الكهربائية",
+      "price": 0,
+      "currency": "USD",
+      "image": "https://sc01.alicdn.com/kf/H9b3243b35aae468eb6d8c7923bea31e5Q.jpg",
+      "url": "https://arabic.alibaba.com/trade/search?SearchText=%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D8%AC%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A8%D8%AE%D8%A7%D8%B1%D9%8A%D8%A9%20%D8%A7%D9%84%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A6%D9%8A%D8%A9",
+      "category": "الدراجات البخارية الكهربائية"
+    },
+    {
+      "id": "alb-ph-7-0",
+      "title": "أجهزة الكمبيوتر المحمولة Pick 1",
+      "title_ar": "أجهزة الكمبيوتر المحمولة — مختار 1",
+      "description_ar": "منتج مميز من قسم أجهزة الكمبيوتر المحمولة",
+      "price": 0,
+      "currency": "USD",
+      "image": "https://sc01.alicdn.com/kf/Hc8d21612ea5f442a8207a772f358be71o.jpg",
+      "url": "https://arabic.alibaba.com/trade/search?SearchText=%D8%A3%D8%AC%D9%87%D8%B2%D8%A9%20%D8%A7%D9%84%D9%83%D9%85%D8%A8%D9%8A%D9%88%D8%AA%D8%B1%20%D8%A7%D9%84%D9%85%D8%AD%D9%85%D9%88%D9%84%D8%A9",
+      "category": "أجهزة الكمبيوتر المحمولة"
+    },
+    {
+      "id": "alb-ph-7-1",
+      "title": "أجهزة الكمبيوتر المحمولة Pick 2",
+      "title_ar": "أجهزة الكمبيوتر المحمولة — مختار 2",
+      "description_ar": "منتج مميز من قسم أجهزة الكمبيوتر المحمولة",
+      "price": 0,
+      "currency": "USD",
+      "image": "https://sc01.alicdn.com/kf/Hc8d21612ea5f442a8207a772f358be71o.jpg",
+      "url": "https://arabic.alibaba.com/trade/search?SearchText=%D8%A3%D8%AC%D9%87%D8%B2%D8%A9%20%D8%A7%D9%84%D9%83%D9%85%D8%A8%D9%8A%D9%88%D8%AA%D8%B1%20%D8%A7%D9%84%D9%85%D8%AD%D9%85%D9%88%D9%84%D8%A9",
+      "category": "أجهزة الكمبيوتر المحمولة"
+    },
+    {
+      "id": "alb-ph-8-0",
+      "title": "احذية نسائية Pick 1",
+      "title_ar": "احذية نسائية — مختار 1",
+      "description_ar": "منتج مميز من قسم احذية نسائية",
+      "price": 0,
+      "currency": "USD",
+      "image": "https://sc01.alicdn.com/kf/Had36cd47f0c541729b772ec97482954eP.jpg",
+      "url": "https://arabic.alibaba.com/trade/search?SearchText=%D8%A7%D8%AD%D8%B0%D9%8A%D8%A9%20%D9%86%D8%B3%D8%A7%D8%A6%D9%8A%D8%A9",
+      "category": "احذية نسائية"
+    },
+    {
+      "id": "alb-ph-8-1",
+      "title": "احذية نسائية Pick 2",
+      "title_ar": "احذية نسائية — مختار 2",
+      "description_ar": "منتج مميز من قسم احذية نسائية",
+      "price": 0,
+      "currency": "USD",
+      "image": "https://sc01.alicdn.com/kf/Had36cd47f0c541729b772ec97482954eP.jpg",
+      "url": "https://arabic.alibaba.com/trade/search?SearchText=%D8%A7%D8%AD%D8%B0%D9%8A%D8%A9%20%D9%86%D8%B3%D8%A7%D8%A6%D9%8A%D8%A9",
+      "category": "احذية نسائية"
+    },
+    {
+      "id": "alb-ph-9-0",
+      "title": "Smartphones & Mobile Pick 1",
+      "title_ar": "الهواتف المحمولة — مختار 1",
+      "description_ar": "منتج مميز من قسم الهواتف المحمولة",
+      "price": 0,
+      "currency": "USD",
+      "image": "https://sc01.alicdn.com/kf/Hc6dd309b133b4ece8b90a29a59795c34H.jpg",
+      "url": "https://arabic.alibaba.com/trade/search?SearchText=%D8%A7%D9%84%D9%87%D9%88%D8%A7%D8%AA%D9%81%20%D8%A7%D9%84%D9%85%D8%AD%D9%85%D9%88%D9%84%D8%A9",
+      "category": "Smartphones & Mobile"
+    },
+    {
+      "id": "alb-ph-9-1",
+      "title": "Smartphones & Mobile Pick 2",
+      "title_ar": "الهواتف المحمولة — مختار 2",
+      "description_ar": "منتج مميز من قسم الهواتف المحمولة",
+      "price": 0,
+      "currency": "USD",
+      "image": "https://sc01.alicdn.com/kf/Hc6dd309b133b4ece8b90a29a59795c34H.jpg",
+      "url": "https://arabic.alibaba.com/trade/search?SearchText=%D8%A7%D9%84%D9%87%D9%88%D8%A7%D8%AA%D9%81%20%D8%A7%D9%84%D9%85%D8%AD%D9%85%D9%88%D9%84%D8%A9",
+      "category": "Smartphones & Mobile"
     }
   ]
 }
