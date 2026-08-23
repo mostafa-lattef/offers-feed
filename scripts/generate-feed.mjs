@@ -145,7 +145,7 @@ for (let c = 0; c < cats.length; c++) {
     liveCount += live.length;
     live.forEach((p, i) => {
       items.push({
-        id: `alb-live-${c}-${i}`,
+        id: `alb-${c}-${i}`,
         title: p.title,
         title_ar: p.title,
         description_ar: `منتج حقيقي من قسم ${cat.name_ar} — علي بابا`,
@@ -164,7 +164,7 @@ for (let c = 0; c < cats.length; c++) {
       : [1, 2].map((n) => ({ title: `${cat.name_en} Pick ${n}`, title_ar: `${cat.name_ar} — مختار ${n}`, price: 0, old_price: null, image: cat.image_url }));
     ph.forEach((p, i) => {
       items.push({
-        id: `alb-ph-${c}-${i}`,
+        id: `alb-${c}-${i}`,
         title: p.title,
         title_ar: p.title_ar,
         description_ar: `منتج مميز من قسم ${cat.name_ar}`,
