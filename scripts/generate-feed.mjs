@@ -6,7 +6,7 @@ const UA = {
 };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-// القائمة الأساسية المضمونة لتغطية كافة البرج والتصنيفات (10+ تصنيفات)
+// ===== التصنيفات الأساسية (نفس القائمة القديمة) =====
 const BASE_CATEGORIES = [
   { name_ar: "الملابس والإكسسوارات", name_en: "Apparel & Accessories", keyword: "fashion" },
   { name_ar: "الإلكترونيات الاستهلاكية", name_en: "Consumer Electronics", keyword: "tech" },
@@ -20,98 +20,126 @@ const BASE_CATEGORIES = [
   { name_ar: "ألعاب الأطفال والمستلزمات", name_en: "Toys & Baby Items", keyword: "toys" },
 ];
 
+// ===== خريطة تصنيفات فيد علي بابا → تصنيفات ميركورا =====
+const CATEGORY_MAP = {
+  "school & office supplies": "Consumer Electronics",
+  "consumer electronics": "Consumer Electronics",
+  "electronics": "Consumer Electronics",
+  "phones & accessories": "Phones & Accessories",
+  "smartphone": "Phones & Accessories",
+  "apparel": "Apparel & Accessories",
+  "fashion": "Apparel & Accessories",
+  "shoes & accessories": "Apparel & Accessories",
+  "home & garden": "Home & Garden",
+  "furniture": "Home & Garden",
+  "home appliances": "Home & Garden",
+  "beauty & personal care": "Beauty & Personal Care",
+  "cosmetics": "Beauty & Personal Care",
+  "health & medical": "Beauty & Personal Care",
+  "industrial machinery": "Industrial Machinery",
+  "tools": "Industrial Machinery",
+  "hardware": "Industrial Machinery",
+  "sports & entertainment": "Sports & Entertainment",
+  "fitness": "Sports & Entertainment",
+  "vehicle parts": "Vehicle Parts",
+  "auto parts": "Vehicle Parts",
+  "jewelry & watches": "Jewelry & Watches",
+  "watch": "Jewelry & Watches",
+  "toys & hobbies": "Toys & Baby Items",
+  "baby & kids": "Toys & Baby Items",
+};
+
 const ADJECTIVES_AR = ["الاحترافي", "الفاخر", "العصري", "الممتاز", "المبتكر", "الأنيق", "عالي الجودة", "الذكي"];
 const ADJECTIVES_EN = ["Pro", "Luxury", "Modern", "Premium", "Smart", "Ultra", "Elite", "Classic"];
 
-// محرك توليد منتجات مضمونة لكل قسم دون الاعتماد على استجابة علي بابا
+// ===== محاولة جلب فيد حقيقي من GitHub =====
+async function fetchGithubFeed(url) {
+  try {
+    const res = await fetch(url, { headers: UA, signal: AbortSignal.timeout(10000) });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data : (data.items || []);
+  } catch {
+    return [];
+  }
+}
+
+// ===== توحيد أسماء الحقول من فيد علي بابا إلى البنية المطلوبة =====
+function normalizeRealProduct(p) {
+  const rawCat = (p.category || "").toLowerCase().trim();
+  const catEn = CATEGORY_MAP[rawCat] || BASE_CATEGORIES[0].name_en;
+
+  return {
+    id: `ali-${p.sku || p.id || Math.random().toString(36).slice(2)}`,
+    title: p.name_en || p.title || "",
+    title_ar: p.name_ar || p.title_ar || "",
+    description_ar: p.description || `منتج حقيقي من قسم ${catEn}`,
+    price: Number(p.price) || 0,
+    currency: p.currency || "USD",
+    image: p.image_url || p.image || "",
+    url: p.source_url || p.url || "",
+    category: catEn,
+    is_real: true,
+  };
+}
+
+// ===== مولد المنتجات الافتراضية (طوق النجاة) =====
 function generateProductsForCategory(catIndex, cat, count = 15) {
   const products = [];
   for (let i = 1; i <= count; i++) {
     const adjAr = ADJECTIVES_AR[i % ADJECTIVES_AR.length];
     const adjEn = ADJECTIVES_EN[i % ADJECTIVES_EN.length];
     const price = Number((Math.random() * 120 + 15).toFixed(2));
-    const oldPrice = Number((price * 1.3).toFixed(2));
     const imageSeed = `${cat.keyword}-${catIndex}-${i}`;
-
     products.push({
       id: `gen-${catIndex}-${i}`,
       title: `${cat.name_en} ${adjEn} Model-${i}`,
       title_ar: `${cat.name_ar} ${adjAr} — موديل ${i}`,
-      description_ar: `منتج فاخر وافتراضي ينتمي لقسم ${cat.name_ar}، جاهز للعرض والتصفح.`,
-      price: price,
-      old_price: oldPrice,
+      description_ar: `منتج افتراضي احتياطي لقسم ${cat.name_ar}`,
+      price,
       currency: "USD",
       image: `https://picsum.photos/seed/${imageSeed}/600/600`,
       url: `https://arabic.alibaba.com/trade/search?SearchText=${encodeURIComponent(cat.name_ar)}`,
       category: cat.name_en,
+      is_real: false,
     });
   }
   return products;
 }
 
-async function fetchText(url) {
-  const res = await fetch(url, { headers: UA, signal: AbortSignal.timeout(5000), redirect: "follow" });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return await res.text();
-}
+// ===== التنفيذ =====
+const GITHUB_FEED_URL = process.env.GITHUB_FEED_URL ||
+  "https://raw.githubusercontent.com/YOUR_USERNAME/mercora-feeds/main/ali-feed.json";
 
-async function scrapeLiveProducts(query) {
-  try {
-    const html = await fetchText(`https://arabic.alibaba.com/trade/search?SearchText=${encodeURIComponent(query)}`);
-    const found = [];
-    let m;
-    const objRe = /{[^{}]*"subject"\s*:\s*"[^"]+"[^{}]*}/g;
-    while ((m = objRe.exec(html)) !== null) {
-      const chunk = m[0];
-      const title = (chunk.match(/"subject"\s*:\s*"([^"]+)"/) || [])[1];
-      const price = (chunk.match(/"price"\s*:\s*"?([\d.]+)"?/) || [])[1];
-      const img = (chunk.match(/"(?:imageUrl|image|mainImage)"\s*:\s*"(https?:[^"]+|\/\/[^"]+)"/) || [])[1];
-      const link = (chunk.match(/"(?:productUrl|href|url)"\s*:\s*"(https?:[^"]+|\/\/[^"]+)"/) || [])[1];
-      if (title) found.push({ title, price: price ? Number(price) : null, img: img || null, link: link || null });
-      if (found.length >= 5) break;
-    }
-    return found;
-  } catch {
-    return [];
-  }
-}
-
-// ---------- التنفيذ الُمحسّن ----------
+const PRODUCTS_PER_CAT = 12;
 const items = [];
-const PRODUCTS_PER_CAT = 12; // ضمان 12 منتجاً لكل قسم من القسم الـ 10
+
+console.log("📡 محاولة جلب المنتجات الحقيقية من GitHub...");
+const realProducts = await fetchGithubFeed(GITHUB_FEED_URL);
+console.log(`   ${realProducts.length > 0 ? "✅" : "⚠️"} استُقبل ${realProducts.length} منتجاً حقيقياً\n`);
+
+// توزيع المنتجات الحقيقية على التصنيفات
+const realByCat = {};
+for (const p of realProducts) {
+  const norm = normalizeRealProduct(p);
+  (realByCat[norm.category] ||= []).push(norm);
+}
 
 for (let c = 0; c < BASE_CATEGORIES.length; c++) {
   const cat = BASE_CATEGORIES[c];
-  
-  // محاولة جلب منتجات حية إن أمكن
-  const live = await scrapeLiveProducts(cat.name_ar);
+  const catReals = realByCat[cat.name_en] || [];
+  items.push(...catReals.slice(0, PRODUCTS_PER_CAT));
 
-  if (live.length > 0) {
-    live.forEach((p, i) => {
-      items.push({
-        id: `alb-${c}-${i}`,
-        title: p.title,
-        title_ar: p.title,
-        description_ar: `منتج حقيقي من قسم ${cat.name_ar}`,
-        price: p.price ?? Number((Math.random() * 50 + 15).toFixed(2)),
-        currency: "USD",
-        image: p.img ? (p.img.startsWith("//") ? `https:${p.img}` : p.img) : `https://picsum.photos/seed/${cat.keyword}-${i}/600/600`,
-        url: p.link ? (p.link.startsWith("//") ? `https:${p.link}` : p.link) : `https://arabic.alibaba.com`,
-        category: cat.name_en,
-      });
-    });
-  }
-
-  // ملء باقي العجز آلياً لضمان وجود 12 منتجاً دائماً في كل تصنيف من الـ 10
-  const needed = PRODUCTS_PER_CAT - live.length;
+  const needed = Math.max(0, PRODUCTS_PER_CAT - catReals.length);
   if (needed > 0) {
-    const mocks = generateProductsForCategory(c, cat, needed);
-    items.push(...mocks);
+    items.push(...generateProductsForCategory(c, cat, needed));
   }
 
-  console.log(`✅ [${cat.name_ar}]: تم تجهيز ${PRODUCTS_PER_CAT} منتجاً (حي: ${live.length} | افتراضي: ${needed})`);
-  await sleep(200);
+  console.log(`✅ [${cat.name_ar}]: حقيقي ${Math.min(catReals.length, PRODUCTS_PER_CAT)} + افتراضي ${needed} = ${PRODUCTS_PER_CAT}`);
 }
 
 writeFileSync("feed.json", JSON.stringify({ items }, null, 2));
-console.log(`\n🎉 تم التحديث بنجاح! تم بناء ${items.length} منتجاً موزعاً على 10 تصنيفات بالتمام.`);
+
+const realCount = items.filter((i) => i.is_real).length;
+const mockCount = items.filter((i) => !i.is_real).length;
+console.log(`\n🎉 اكتمل: ${realCount} منتجاً حقيقياً + ${mockCount} افتراضياً = ${items.length} إجمالي`);
