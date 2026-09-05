@@ -108,8 +108,7 @@ function generateProductsForCategory(catIndex, cat, count = 15) {
 }
 
 // ===== التنفيذ =====
-const GITHUB_FEED_URL = process.env.GITHUB_FEED_URL ||
-  "https://raw.githubusercontent.com/YOUR_USERNAME/mercora-feeds/main/ali-feed.json";
+const GITHUB_FEED_URL = "https://raw.githubusercontent.com/mostafa-lattef/offers-feed/main/ali-feed.json";
 
 const PRODUCTS_PER_CAT = 12;
 const items = [];
