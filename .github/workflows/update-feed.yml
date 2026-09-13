@@ -18,6 +18,10 @@ jobs:
           node-version: 20
 
       - name: Generate feed.json
+        env:
+          ALIEXPRESS_APP_KEY: ${{ secrets.ALIEXPRESS_APP_KEY }}
+          ALIEXPRESS_APP_SECRET: ${{ secrets.ALIEXPRESS_APP_SECRET }}
+          ALIEXPRESS_TRACKING_ID: ${{ secrets.ALIEXPRESS_TRACKING_ID }}
         run: node scripts/generate-feed.mjs
 
       - name: Commit & push
