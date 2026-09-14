@@ -11,57 +11,57 @@ const TRACKING_ID = process.env.ALIEXPRESS_TRACKING_ID || "default";
 // Taobao/TOP القديمة، مش على api-sg.aliexpress.com. وكل الأمثلة الموثّقة
 // لنفس الـmethod بتستخدم http (مش https) لهذا الدومين تحديداً — استخدام
 // https هنا سبّب فشل الاتصال (fetch failed) بسبب مشكلة في شهادة/بروتوكول TLS.
-const API_URL = "http://gw.api.taobao.com/router/rest";
+// ===== AliExpress Open Platform — البوابة الجديدة =====
+const API_URL = "https://api-sg.aliexpress.com/sync";
 const METHOD = "aliexpress.affiliate.product.query";
-
-// توقيع TOP: MD5(APP_SECRET + مفاتيح_مرتّبة+قيمها + APP_SECRET) بالحروف الكبيرة
-function generateSignature(params, appSecret) {
-  const sortedKeys = Object.keys(params).sort();
-  let s = appSecret;
-  for (const key of sortedKeys) {
-    if (params[key] !== undefined && params[key] !== null && params[key] !== "") {
-      s += `${key}${params[key]}`;
-    }
-  }
-  s += appSecret;
-  return crypto.createHash("md5").update(s, "utf8").digest("hex").toUpperCase();
-}
-
-// التوقيت الزمني مطلوب بصيغة "yyyy-MM-dd HH:mm:ss" بتوقيت الصين (GMT+8) —
-// استخدام وقت UTC مباشرة هنا كان بيولّد فارق 8 ساعات وممكن يخلي السيرفر يرفض
-// الطلب باعتباره توقيتاً غير صالح.
-function chinaTimestamp() {
-  const chinaMs = Date.now() + 8 * 60 * 60 * 1000;
-  return new Date(chinaMs).toISOString().replace("T", " ").substring(0, 19);
-}
 
 async function callAliExpress(extraParams) {
   if (!APP_KEY || !APP_SECRET) {
     throw new Error("ALIEXPRESS_APP_KEY / ALIEXPRESS_APP_SECRET غير موجودين في متغيرات البيئة");
   }
 
-  const params = {
-    app_key: APP_KEY,
-    method: METHOD,
-    format: "json",
-    v: "2.0",
-    sign_method: "md5",
-    timestamp: chinaTimestamp(),
-    tracking_id: TRACKING_ID,
-    target_currency: "USD", // نفس عملة باقي الفيد؛ الترجمة/التوطين تتم لاحقاً من لوحة الأدمن
-    target_language: "EN",
-    page_size: 50,
-    ...extraParams,
-  };
+  const timestamp = String(Date.now());          // ميلي-ثانية منذ Epoch
+  const body = JSON.stringify(extraParams);      // بارامترات العمل فقط في الجسم
 
-  params.sign = generateSignature(params, APP_SECRET);
+  // توقيع المنصة الجديدة: HMAC-SHA256( Secret , appKey+method+timestamp+body )
+  const sign = crypto
+    .createHmac("sha256", APP_SECRET)
+    .update(APP_KEY + METHOD + timestamp + body, "utf8")
+    .digest("hex")
+    .toUpperCase();
 
-  const res = await fetch(API_URL, {
+  const url =
+    `${API_URL}?app_key=${encodeURIComponent(APP_KEY)}` +
+    `&method=${encodeURIComponent(METHOD)}` +
+    `&timestamp=${timestamp}` +
+    `&sign_method=sha256` +
+    `&sign=${encodeURIComponent(sign)}`;
+
+  const res = await fetch(url, {
     method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams(params).toString(),
-    signal: AbortSignal.timeout(20000),
+    headers: { "Content-Type": "application/json" },
+    body,
+    signal: AbortSignal.timeout(30000),
   });
+
+  if (!res.ok) throw new Error(`AliExpress HTTP ${res.status}`);
+  const data = await res.json();
+
+  if (data?.code && data.code !== 0) {
+    throw new Error(`AliExpress API error ${data.code}: ${data.message ?? JSON.stringify(data).slice(0, 300)}`);
+  }
+
+  const r = data?.aliexpress_affiliate_product_query_response ?? data;
+  const products = Array.isArray(r?.result?.products) ? r.result.products
+    : Array.isArray(r?.products) ? r.products
+    : Array.isArray(r?.result) ? r.result : [];
+  const totalRecordCount = Number(r?.result?.total_results ?? r?.total_results ?? products.length);
+
+  if (!products.length) {
+    throw new Error(`AliExpress empty/unexpected response: ${JSON.stringify(data).slice(0, 500)}`);
+  }
+  return { products, totalRecordCount };
+}
 
   if (!res.ok) throw new Error(`AliExpress HTTP ${res.status}`);
   const data = await res.json();
