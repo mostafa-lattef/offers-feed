@@ -7,7 +7,7 @@ const APP_KEY = process.env.ALIEXPRESS_APP_KEY;
 const APP_SECRET = process.env.ALIEXPRESS_APP_SECRET;
 const TRACKING_ID = process.env.ALIEXPRESS_TRACKING_ID || "default";
 
-const API_URL = "https://api-sg.aliexpress.com/sync";
+const API_URL = "https://gw.api.taobao.com/router/rest";
 const METHOD = "aliexpress.affiliate.product.query";
 
 // توقيع TOP: MD5(APP_SECRET + مفاتيح_مرتّبة+قيمها + APP_SECRET) بالحروف الكبيرة
