@@ -7,7 +7,11 @@ const APP_KEY = process.env.ALIEXPRESS_APP_KEY;
 const APP_SECRET = process.env.ALIEXPRESS_APP_SECRET;
 const TRACKING_ID = process.env.ALIEXPRESS_TRACKING_ID || "default";
 
-const API_URL = "https://gw.api.taobao.com/router/rest";
+// ملاحظة مهمة: تطبيقات "Affiliates API" (زي تطبيقك) مسجّلة على بوابة
+// Taobao/TOP القديمة، مش على api-sg.aliexpress.com. وكل الأمثلة الموثّقة
+// لنفس الـmethod بتستخدم http (مش https) لهذا الدومين تحديداً — استخدام
+// https هنا سبّب فشل الاتصال (fetch failed) بسبب مشكلة في شهادة/بروتوكول TLS.
+const API_URL = "http://gw.api.taobao.com/router/rest";
 const METHOD = "aliexpress.affiliate.product.query";
 
 // توقيع TOP: MD5(APP_SECRET + مفاتيح_مرتّبة+قيمها + APP_SECRET) بالحروف الكبيرة
@@ -98,7 +102,8 @@ export async function fetchAliExpressProducts(keywords = "trending", { maxPages 
         page_size: pageSize,
       }));
     } catch (e) {
-      console.error(`AliExpress fetch failed (keywords="${keywords}", page=${page}):`, e.message);
+      const detail = e?.cause?.code || e?.cause?.message || e.message;
+      console.error(`AliExpress fetch failed (keywords="${keywords}", page=${page}): ${e.message} — cause: ${detail}`);
       break;
     }
 
