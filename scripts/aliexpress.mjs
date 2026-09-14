@@ -9,7 +9,7 @@ const TRACKING_ID = process.env.ALIEXPRESS_TRACKING_ID || "default";
 // البوابة الجديدة لمنصة AliExpress المفتوحة
 const API_URL = "https://api-sg.aliexpress.com/sync";
 const METHOD = "aliexpress.affiliate.product.query";
-
+console.error(`[debug] APP_KEY preview: ${APP_KEY?.slice(0, 4)}… len=${APP_KEY?.length}`);
 async function callAliExpress(extraParams) {
   if (!APP_KEY || !APP_SECRET) {
     throw new Error("ALIEXPRESS_APP_KEY / ALIEXPRESS_APP_SECRET غير موجودين في متغيرات البيئة");
