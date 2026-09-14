@@ -1,35 +1,17 @@
-import { createFileRoute } from "@tanstack/react-router";
+name: Sync App Offers
 
-/**
- * Scheduled offers refresh. Call with:
- *   POST /api/public/sync-offers   header: x-sync-token: <OFFERS_SYNC_TOKEN>
- * Now also lights up every tower that has a feed.
- */
-export const Route = createFileRoute("/api/public/sync-offers")({
-  server: {
-    handlers: {
-      POST: async ({ request }) => {
-        const expected = process.env["OFFERS_SYNC_TOKEN"];
-        const provided = request.headers.get("x-sync-token") ?? "";
-        if (!expected || provided.length !== expected.length || provided !== expected) {
-          return new Response("Unauthorized", { status: 401 });
-        }
+on:
+  push:
+    paths: ["feed.json"]      # أي تحديث للملف → مزامنة فورية
+  schedule:
+    - cron: "0 */6 * * *"     # احتياط: كل 6 ساعات
+  workflow_dispatch: {}       # زر تشغيل يدوي
 
-        const { syncAllCompanyOffers } = await import("@/lib/offers-sync.server");
-
-        const result = await syncAllCompanyOffers();
-
-        // ملاحظة: كنا هنا بننادي syncAllTowers() اللي بتضيء وحدات البرج بمنطق
-        // قديم (أول N وحدة بترتيب unit_number بدون أي اعتبار للواجهات face/floor/slot
-        // ولا لحصص الشركة الرئيسية/المحجوز/الإيجار). هذا كان بيتعارض تلقائياً كل
-        // 6-12 ساعة مع نظام توزيع 12(أعلى)+8(أرضي)/10(محجوز)/10(إيجار) الجديد
-        // في provisionTowerLayout و linkTowerUnitsToMarket، ويفسّر تفاوت الأعداد
-        // بين الأوجه وتكرار/تجاوز التصنيفات المخصصة. عُطِّل عمداً — ربط البرج
-        // بالتصنيفات يتم الآن فقط يدوياً من لوحة الأدمن (زر «ربط بالبرج»).
-        const towers: unknown = [];
-
-        return Response.json({ ...result, towers });
-      },
-    },
-  },
-});
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger app sync
+        run: |
+          curl -sS -X POST "${{ secrets.SITE_URL }}/api/public/sync-offers" \
+            -H "x-sync-token: ${{ secrets.OFFERS_SYNC_TOKEN }}"
