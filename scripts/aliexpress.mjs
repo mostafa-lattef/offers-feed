@@ -1,9 +1,12 @@
 import crypto from "node:crypto";
 
+// ===== AliExpress Open Platform (Affiliate API) =====
+// المفاتيح تُقرأ من متغيرات البيئة فقط — لا قيم افتراضية هنا أبداً.
 const APP_KEY = process.env.ALIEXPRESS_APP_KEY;
 const APP_SECRET = process.env.ALIEXPRESS_APP_SECRET;
 const TRACKING_ID = process.env.ALIEXPRESS_TRACKING_ID || "default";
 
+// البوابة الجديدة لمنصة AliExpress المفتوحة
 const API_URL = "https://api-sg.aliexpress.com/sync";
 const METHOD = "aliexpress.affiliate.product.query";
 
@@ -13,7 +16,7 @@ async function callAliExpress(extraParams) {
   }
 
   const timestamp = String(Date.now());          // ميلي-ثانية منذ Epoch
-  const body = JSON.stringify(extraParams);      // بارامترات العمل فقط في الجسم
+  const body = JSON.stringify(extraParams);      // بارامترات العمل في الجسم
 
   // توقيع المنصة الجديدة: HMAC-SHA256( Secret , appKey+method+timestamp+body )
   const sign = crypto
@@ -44,42 +47,25 @@ async function callAliExpress(extraParams) {
   }
 
   const r = data?.aliexpress_affiliate_product_query_response ?? data;
-  const products = Array.isArray(r?.result?.products) ? r.result.products
-    : Array.isArray(r?.products) ? r.products
-    : Array.isArray(r?.result) ? r.result : [];
+  const products = Array.isArray(r?.result?.products)
+    ? r.result.products
+    : Array.isArray(r?.products)
+      ? r.products
+      : Array.isArray(r?.result)
+        ? r.result
+        : [];
   const totalRecordCount = Number(r?.result?.total_results ?? r?.total_results ?? products.length);
 
   if (!products.length) {
     throw new Error(`AliExpress empty/unexpected response: ${JSON.stringify(data).slice(0, 500)}`);
   }
-  return { products, totalRecordCount };
-}
 
-  if (!res.ok) throw new Error(`AliExpress HTTP ${res.status}`);
-  const data = await res.json();
-
-  // أخطاء TOP بترجع في error_response، مش برمز HTTP فاشل
-  if (data.error_response) {
-    throw new Error(
-      `AliExpress API error ${data.error_response.code || ""}: ${data.error_response.msg || JSON.stringify(data.error_response)}`
-    );
-  }
-
-  const result = data?.aliexpress_affiliate_product_query_response?.resp_result;
-  if (!result || result.resp_code !== 200) {
-    throw new Error(`AliExpress unexpected response: ${JSON.stringify(data).slice(0, 500)}`);
-  }
-
-  const products = result.result?.products?.product ?? [];
-  const totalRecordCount = Number(result.result?.total_record_count ?? products.length);
   return { products, totalRecordCount };
 }
 
 /**
- * يجلب منتجات AliExpress بكلمة بحث معيّنة، مع دعم الصفحات حتى سقف معيّن،
- * ويحوّلها لنفس شكل عناصر الفيد المستخدم لعلي بابا (id/title/price/image/url/category).
- * لا يكتب في Supabase مباشرة أبداً — هذا الريبو ما عندوش مفاتيح Supabase أصلاً؛
- * الكتابة تتم لاحقاً عبر /api/public/sync-offers زي فيد علي بابا بالظبط.
+ * يجلب منتجات AliExpress بكلمة بحث، ويحوّلها لنفس شكل عناصر فيد علي بابا.
+ * لا يكتب في Supabase — الكتابة تتم لاحقاً عبر /api/public/sync-offers.
  */
 export async function fetchAliExpressProducts(keywords = "trending", { maxPages = 4, pageSize = 50 } = {}) {
   const items = [];
@@ -92,6 +78,9 @@ export async function fetchAliExpressProducts(keywords = "trending", { maxPages 
         keywords,
         page_no: page,
         page_size: pageSize,
+        target_currency: "USD",
+        target_language: "EN",
+        tracking_id: TRACKING_ID,
       }));
     } catch (e) {
       const detail = e?.cause?.code || e?.cause?.message || e.message;
