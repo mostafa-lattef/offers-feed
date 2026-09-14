@@ -1,17 +1,9 @@
 import crypto from "node:crypto";
 
-// ===== AliExpress Open Platform (Affiliate API) =====
-// المفاتيح تُقرأ من متغيرات البيئة فقط — لا يوجد أي قيمة افتراضية هنا أبداً.
-// إذا لم تكن موجودة، الدالة تفشل بوضوح بدل ما تعمل بمفتاح مكشوف داخل الكود.
 const APP_KEY = process.env.ALIEXPRESS_APP_KEY;
 const APP_SECRET = process.env.ALIEXPRESS_APP_SECRET;
 const TRACKING_ID = process.env.ALIEXPRESS_TRACKING_ID || "default";
 
-// ملاحظة مهمة: تطبيقات "Affiliates API" (زي تطبيقك) مسجّلة على بوابة
-// Taobao/TOP القديمة، مش على api-sg.aliexpress.com. وكل الأمثلة الموثّقة
-// لنفس الـmethod بتستخدم http (مش https) لهذا الدومين تحديداً — استخدام
-// https هنا سبّب فشل الاتصال (fetch failed) بسبب مشكلة في شهادة/بروتوكول TLS.
-// ===== AliExpress Open Platform — البوابة الجديدة =====
 const API_URL = "https://api-sg.aliexpress.com/sync";
 const METHOD = "aliexpress.affiliate.product.query";
 
