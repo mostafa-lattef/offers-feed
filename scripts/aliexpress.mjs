@@ -2,9 +2,10 @@ import crypto from "node:crypto";
 
 // ===== AliExpress Open Platform (Affiliate API) =====
 // المفاتيح تُقرأ من متغيرات البيئة فقط — لا قيم افتراضية هنا أبداً.
-const APP_KEY = (process.env.ALIEXPRESS_APP_KEY || "").trim();
-const APP_SECRET = (process.env.ALIEXPRESS_APP_SECRET || "").trim();
-const TRACKING_ID = (process.env.ALIEXPRESS_TRACKING_ID || "default").trim();
+const clean = (v) => (v || "").replace(/\s+/g, "");   // يكنس كل فراغٍ أينما اختبأ
+const APP_KEY = clean(process.env.ALIEXPRESS_APP_KEY);
+const APP_SECRET = clean(process.env.ALIEXPRESS_APP_SECRET);
+const TRACKING_ID = clean(process.env.ALIEXPRESS_TRACKING_ID) || "default";
 
 // البوابة الجديدة لمنصة AliExpress المفتوحة
 const API_URL = "https://api-sg.aliexpress.com/sync";
