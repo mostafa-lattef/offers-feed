@@ -1,73 +1,103 @@
 import crypto from "node:crypto";
 
 // ===== AliExpress Open Platform (Affiliate API) =====
-// المفاتيح تُقرأ من متغيرات البيئة فقط — لا قيم افتراضية هنا أبداً.
-const clean = (v) => (v || "").replace(/\s+/g, "");   // يكنس كل فراغٍ أينما اختبأ
+const clean = (v) => (v || "").replace(/\s+/g, "");
 const APP_KEY = clean(process.env.ALIEXPRESS_APP_KEY);
 const APP_SECRET = clean(process.env.ALIEXPRESS_APP_SECRET);
 const TRACKING_ID = clean(process.env.ALIEXPRESS_TRACKING_ID) || "default";
+let ACCESS_TOKEN = clean(process.env.ALIEXPRESS_ACCESS_TOKEN);
+const REFRESH_TOKEN = clean(process.env.ALIEXPRESS_REFRESH_TOKEN);
+const TOKEN_EXPIRES_AT = Number(process.env.ALIEXPRESS_TOKEN_EXPIRES_AT || 0);
 
-// البوابة الجديدة لمنصة AliExpress المفتوحة
-const API_URL = "https://api-sg.aliexpress.com/sync";
+const SYNC_URL = "https://api-sg.aliexpress.com/sync";   // بروتوكول TOP للمنتجات
+const REST_URL = "https://api-sg.aliexpress.com/rest";   // بروتوكول GOP للتوكنات
 const METHOD = "aliexpress.affiliate.product.query";
+
 console.error(`[debug] APP_KEY preview: ${APP_KEY?.slice(0, 4)}… len=${APP_KEY?.length}`);
 console.error(`[debug] APP_SECRET len=${APP_SECRET?.length}`);
-async function callAliExpress(extraParams) {
-  if (!APP_KEY || !APP_SECRET) {
-    throw new Error("ALIEXPRESS_APP_KEY / ALIEXPRESS_APP_SECRET غير موجودين في متغيرات البيئة");
+console.error(`[debug] ACCESS_TOKEN len=${ACCESS_TOKEN?.length}`);
+
+// التوقيع الرسمي المثبت من IopUtils: apiName + البارامترات المرتّبة (key+value)
+const hmacUpper = (s) => crypto.createHmac("sha256", APP_SECRET).update(s, "utf8").digest("hex").toUpperCase();
+function signFor(apiName, params) {
+  let s = apiName;
+  for (const k of Object.keys(params).sort()) {
+    const v = params[k];
+    if (v != null && v !== "") s += k + v;
   }
+  return hmacUpper(s);
+}
 
-  const timestamp = String(Date.now());          // ميلي-ثانية منذ Epoch
-  const body = JSON.stringify(extraParams);      // بارامترات العمل في الجسم
-
-  // توقيع المنصة الجديدة: HMAC-SHA256( Secret , appKey+method+timestamp+body )
-  const sign = crypto
-    .createHmac("sha256", APP_SECRET)
-    .update(APP_KEY + METHOD + timestamp + body, "utf8")
-    .digest("hex")
-    .toUpperCase();
-
-  const url =
-    `${API_URL}?app_key=${encodeURIComponent(APP_KEY)}` +
-    `&method=${encodeURIComponent(METHOD)}` +
-    `&timestamp=${timestamp}` +
-    `&sign_method=sha256` +
-    `&sign=${encodeURIComponent(sign)}`;
-
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body,
-    signal: AbortSignal.timeout(30000),
-  });
-
+async function getJson(url) {
+  const res = await fetch(url, { signal: AbortSignal.timeout(30000) });
   if (!res.ok) throw new Error(`AliExpress HTTP ${res.status}`);
-  const data = await res.json();
+  return res.json();
+}
 
-  if (data?.code && data.code !== 0) {
-    throw new Error(`AliExpress API error ${data.code}: ${data.message ?? JSON.stringify(data).slice(0, 300)}`);
+// نداء REST (التوكنات): /rest + apiName — التركيبة الفائزة المثبتة
+async function callRest(apiName, biz) {
+  const params = { app_key: APP_KEY, sign_method: "sha256", timestamp: String(Date.now()), ...biz };
+  const url = `${REST_URL}${apiName}?` + new URLSearchParams({ ...params, sign: signFor(apiName, params) }).toString();
+  return getJson(url);
+}
+
+// نداء TOP (المنتجات): /sync — يُحسم أمر method داخل البصمة تلقائيًا
+let METHOD_IN_SIGN = true;
+async function callSync(apiName, biz) {
+  const params = {
+    app_key: APP_KEY, method: apiName, sign_method: "sha256",
+    timestamp: String(Date.now()), access_token: ACCESS_TOKEN, ...biz,
+  };
+  const forSign = METHOD_IN_SIGN
+    ? params
+    : Object.fromEntries(Object.entries(params).filter(([k]) => k !== "method"));
+  const url = `${SYNC_URL}?` + new URLSearchParams({ ...params, sign: signFor(apiName, forSign) }).toString();
+  return getJson(url);
+}
+
+// تجديد التوكن عند الانتهاء (لهذه الجولة فقط + تنبيه لتحديث الأسرار)
+async function ensureToken() {
+  if (!ACCESS_TOKEN) throw new Error("ALIEXPRESS_ACCESS_TOKEN غير موجود في Secrets");
+  if (TOKEN_EXPIRES_AT && Date.now() > TOKEN_EXPIRES_AT - 3600_000) {
+    if (!REFRESH_TOKEN) throw new Error("التوكن منتهٍ وALIEXPRESS_REFRESH_TOKEN غير موجود");
+    console.error("[auth] التوكن منتهٍ — تجديد لهذه الجولة فقط…");
+    const r = await callRest("/auth/token/refresh", { refresh_token: REFRESH_TOKEN });
+    if (!r?.access_token) throw new Error("فشل التجديد: " + JSON.stringify(r).slice(0, 300));
+    ACCESS_TOKEN = r.access_token;
+    console.error("[auth] ⚠️ نجحت الجولة بتوكن مؤقت — حدّث الأسرار عبر scripts/refresh-token.mjs");
   }
+  return ACCESS_TOKEN;
+}
 
-  const r = data?.aliexpress_affiliate_product_query_response ?? data;
-  const products = Array.isArray(r?.result?.products)
-    ? r.result.products
-    : Array.isArray(r?.products)
-      ? r.products
-      : Array.isArray(r?.result)
-        ? r.result
-        : [];
-  const totalRecordCount = Number(r?.result?.total_results ?? r?.total_results ?? products.length);
+async function callAliExpress(extraParams) {
+  if (!APP_KEY || !APP_SECRET) throw new Error("ALIEXPRESS_APP_KEY / ALIEXPRESS_APP_SECRET غير موجودين");
+  await ensureToken();
 
-  if (!products.length) {
-    throw new Error(`AliExpress empty/unexpected response: ${JSON.stringify(data).slice(0, 500)}`);
+  for (const methodInSign of [true, false]) {
+    METHOD_IN_SIGN = methodInSign;
+    const data = await callSync(METHOD, extraParams);
+
+    const err = data?.error_response ?? (data?.code !== undefined && String(data.code) !== "0" ? data : null);
+    if (err) {
+      if (err.code === "IncompleteSignature") continue;   // جرّب التركيبة الأخرى
+      throw new Error(`AliExpress API error ${err.code}: ${err.message ?? err.msg ?? JSON.stringify(data).slice(0, 300)}`);
+    }
+
+    const r = data?.aliexpress_affiliate_product_query_response ?? data?.resp_result ?? data;
+    const products = Array.isArray(r?.result?.products) ? r.result.products
+      : Array.isArray(r?.products) ? r.products
+      : Array.isArray(r?.result) ? r.result : [];
+    const totalRecordCount = Number(r?.result?.total_results ?? r?.total_results ?? products.length);
+
+    if (!products.length) throw new Error(`AliExpress empty/unexpected response: ${JSON.stringify(data).slice(0, 500)}`);
+    console.error(`[auth] ✅ تركيبة التوقيع الفائزة: methodInSign=${methodInSign}`);
+    return { products, totalRecordCount };
   }
-
-  return { products, totalRecordCount };
+  throw new Error("IncompleteSignature بكل التركيبات — تحقق من الأسرار");
 }
 
 /**
  * يجلب منتجات AliExpress بكلمة بحث، ويحوّلها لنفس شكل عناصر فيد علي بابا.
- * لا يكتب في Supabase — الكتابة تتم لاحقاً عبر /api/public/sync-offers.
  */
 export async function fetchAliExpressProducts(keywords = "trending", { maxPages = 4, pageSize = 50 } = {}) {
   const items = [];
@@ -85,8 +115,7 @@ export async function fetchAliExpressProducts(keywords = "trending", { maxPages 
         tracking_id: TRACKING_ID,
       }));
     } catch (e) {
-      const detail = e?.cause?.code || e?.cause?.message || e.message;
-      console.error(`AliExpress fetch failed (keywords="${keywords}", page=${page}): ${e.message} — cause: ${detail}`);
+      console.error(`AliExpress fetch failed (keywords="${keywords}", page=${page}): ${e.message}`);
       break;
     }
 
