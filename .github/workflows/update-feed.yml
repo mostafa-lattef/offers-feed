@@ -24,7 +24,6 @@ jobs:
           ALIEXPRESS_TRACKING_ID: ${{ secrets.ALIEXPRESS_TRACKING_ID }}
           ALIEXPRESS_REFRESH_TOKEN: ${{ secrets.ALIEXPRESS_REFRESH_TOKEN }}
           ALIEXPRESS_ACCESS_TOKEN: ${{ secrets.ALIEXPRESS_ACCESS_TOKEN }}
-          ALIEXPRESS_REFRESH_TOKEN: ${{ secrets.ALIEXPRESS_REFRESH_TOKEN }}
           ALIEXPRESS_TOKEN_EXPIRES_AT: ${{ secrets.ALIEXPRESS_TOKEN_EXPIRES_AT }}
           ALIEXPRESS_USER_NICK: ${{ secrets.ALIEXPRESS_USER_NICK }}
         run: node scripts/generate-feed.mjs
