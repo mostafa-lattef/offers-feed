@@ -1,0 +1,20 @@
+{
+  "globalPolicy": {
+    "requireGlobalShipping": true,
+    "excludeRegionalRestrictions": true
+  },
+  "providers": [
+    {
+      "name": "aliexpress",
+      "enabled": true,
+      "isGlobal": true,
+      "type": "api"
+    },
+    {
+      "name": "alibaba",
+      "enabled": true,
+      "isGlobal": true,
+      "type": "api"
+    }
+  ]
+}
