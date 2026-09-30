@@ -17,7 +17,7 @@ async function buildMasterFeed() {
 
   for (const provider of config.providers) {
     if (!provider.enabled || !provider.isGlobal) {
-      console.log(`⚠️ تخطي المنصة: ${provider.name} (غير مفعلة أو مقيدة).`);
+      console.log(`⚠️️ تخطي المنصة: ${provider.name} (غير مفعلة أو مقيدة).`);
       continue;
     }
 
@@ -32,7 +32,11 @@ async function buildMasterFeed() {
     }
   }
 
-  const outputPath = path.resolve('./public/feed.json');
+  // التأكد من أن مجلد public موجود، وإنشاؤه إذا لم يكن موجوداً
+  const outputDir = path.resolve('./public');
+  await fs.mkdir(outputDir, { recursive: true });
+
+  const outputPath = path.join(outputDir, 'feed.json');
   await fs.writeFile(outputPath, JSON.stringify(masterFeed, null, 2));
   console.log(`✅ تم تحديث ملف الفيد بنجاح! إجمالي المنتجات المعتمَدة: ${masterFeed.length}`);
 }
