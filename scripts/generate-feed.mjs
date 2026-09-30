@@ -1,76 +1,40 @@
-import { writeFileSync } from "node:fs";
-import { fetchAliExpressProducts } from "./aliexpress.mjs";
+import fs from 'fs/promises';
+import path from 'path';
+import config from './config/affiliates.config.json' assert { type: 'json' };
 
-// ===== المصدر: خزان علي بابا الحقيقي على GitHub =====
-const GITHUB_FEED_URL = "https://raw.githubusercontent.com/mostafa-lattef/offers-feed/main/ali-feed.json";
+import { fetchAliExpressProducts } from './adapters/aliexpress.adapter.js';
+import { fetchAlibabaProducts } from './adapters/alibaba.adapter.js';
 
-// كلمات بحث AliExpress — عدّلها زي ما يناسبك، أو سيبها فاضية لتعطيل الجلب من AliExpress تماماً
-const ALIEXPRESS_KEYWORDS = ["trending", "hot sale", "best seller"];
+const adapters = {
+  aliexpress: fetchAliExpressProducts,
+  alibaba: fetchAlibabaProducts
+};
 
-async function fetchFeed(url) {
-  const res = await fetch(url, { signal: AbortSignal.timeout(15000) });
-  if (!res.ok) throw new Error("HTTP " + res.status);
-  const data = await res.json();
-  return Array.isArray(data) ? data : (data.items || []);
-}
+async function buildMasterFeed() {
+  let masterFeed = [];
 
-let raw = [];
-try {
-  raw = await fetchFeed(GITHUB_FEED_URL);
-} catch (e) {
-  console.error("Fetch failed:", e.message);
-}
+  console.log("🚀 بدء عملية تحديث الفيد العالمي لموقع ميركورا...");
 
-console.log("Fetched:", raw.length, "real products (Alibaba)");
+  for (const provider of config.providers) {
+    if (!provider.enabled || !provider.isGlobal) {
+      console.log(`⚠️ تخطي المنصة: ${provider.name} (غير مفعلة أو مقيدة).`);
+      continue;
+    }
 
-// جلب منتجات AliExpress إضافياً — يعمل فقط إذا كانت المفاتيح موجودة في متغيرات البيئة
-// (secrets في GitHub Actions). فشل AliExpress هنا لا يوقف تحديث فيد علي بابا.
-let aliexpressItems = [];
-if (process.env.ALIEXPRESS_APP_KEY && process.env.ALIEXPRESS_APP_SECRET) {
-  for (const kw of ALIEXPRESS_KEYWORDS) {
-    try {
-      const found = await fetchAliExpressProducts(kw, { maxPages: 2, pageSize: 50 });
-      aliexpressItems.push(...found);
-      console.log(`AliExpress "${kw}":`, found.length, "products");
-    } catch (e) {
-      console.error(`AliExpress "${kw}" failed:`, e.message);
+    if (adapters[provider.name]) {
+      try {
+        console.log(`📥 جاري جلب المنتجات من: ${provider.name}...`);
+        const products = await adapters[provider.name]();
+        masterFeed.push(...products);
+      } catch (error) {
+        console.error(`❌ فشل الجلب من ${provider.name}:`, error.message);
+      }
     }
   }
-} else {
-  console.log("AliExpress keys not set — skipping AliExpress fetch.");
+
+  const outputPath = path.resolve('./public/feed.json');
+  await fs.writeFile(outputPath, JSON.stringify(masterFeed, null, 2));
+  console.log(`✅ تم تحديث ملف الفيد بنجاح! إجمالي المنتجات المعتمَدة: ${masterFeed.length}`);
 }
 
-if (raw.length === 0 && aliexpressItems.length === 0) {
-  console.error("Empty feed — feed.json NOT overwritten");
-  process.exit(1);
-}
-
-const alibabaItems = raw.map((p) => ({
-  id: p.id || "ali-" + Math.random().toString(36).slice(2),
-  title: p.title || "",
-  title_ar: p.title_ar || "",
-  description_ar: p.description_ar || "",
-  price: Number(p.price) || 0,
-  currency: p.currency || "USD",
-  image: p.image || p.image_url || "",
-  url: p.url || p.source_url || "",
-  category: p.category || "General",
-  feed: p.feed || "alibaba",
-  is_real: true
-}));
-
-// دمج المصدرين مع إزالة أي تكرار بالـid
-const seenIds = new Set();
-const items = [];
-for (const it of [...alibabaItems, ...aliexpressItems]) {
-  if (seenIds.has(it.id)) continue;
-  seenIds.add(it.id);
-  items.push(it);
-}
-
-writeFileSync("feed.json", JSON.stringify({ items }, null, 2));
-
-const cats = {};
-for (const i of items) cats[i.category] = (cats[i.category] || 0) + 1;
-console.log("Done: feed.json with", items.length, "real products");
-for (const k of Object.keys(cats).sort()) console.log("  ", k, ":", cats[k]);
+buildMasterFeed();
