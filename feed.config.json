@@ -1,0 +1,5 @@
+{
+  "maxItemsPerCompany": 2000,
+  "maxItemsPerCategory": 300,
+  "keepUncategorized": false
+}

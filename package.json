@@ -1,0 +1,11 @@
+{
+  "name": "offers-feed",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Company-agnostic offers feed generator for MERCORA",
+  "scripts": {
+    "generate": "node scripts/generate-feed.mjs"
+  },
+  "engines": { "node": ">=20" }
+}

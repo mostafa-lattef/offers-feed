@@ -1,0 +1,22 @@
+[
+  { "key": "consumer_electronics", "name_en": "Consumer Electronics", "name_ar": "الإلكترونيات",
+    "keywords": ["electronic", "laptop", "computer", "camera", "speaker", "headphone", "earphone", "monitor", "led", "tv", "gadget", "school & office", "smart watch", "drone", "router"] },
+  { "key": "phones_accessories", "name_en": "Phones & Accessories", "name_ar": "الهواتف وملحقاتها",
+    "keywords": ["phone", "smartphone", "mobile", "charger", "power bank", "cable", "case", "screen protector", "tablet"] },
+  { "key": "apparel_accessories", "name_en": "Apparel & Accessories", "name_ar": "الأزياء والملابس",
+    "keywords": ["apparel", "clothing", "clothes", "fashion", "dress", "shirt", "jacket", "jeans", "hoodie", "shoes", "sneaker", "bag", "handbag", "hat", "scarf", "underwear"] },
+  { "key": "home_garden", "name_en": "Home & Garden", "name_ar": "المنزل والحديقة",
+    "keywords": ["home", "garden", "furniture", "kitchen", "sofa", "table", "chair", "lamp", "curtain", "vase", "bedding", "storage", "appliance", "tools & home", "decor"] },
+  { "key": "beauty_personal_care", "name_en": "Beauty & Personal Care", "name_ar": "الجمال والعناية الشخصية",
+    "keywords": ["beauty", "cosmetic", "makeup", "lipstick", "skin", "cream", "hair", "perfume", "nail", "shampoo", "personal care"] },
+  { "key": "industrial_machinery", "name_en": "Industrial Machinery", "name_ar": "المعدات والآلات الصناعية",
+    "keywords": ["machinery", "industrial", "machine", "motor", "pump", "weld", "hardware", "tool", "construction", "packaging", "printing", "fabrication", "commercial equipment"] },
+  { "key": "vehicle_parts", "name_en": "Vehicle Parts", "name_ar": "قطع المركبات",
+    "keywords": ["vehicle", "automobile", "automotive", "car part", "car accessor", "auto part", "tire", "brake", "motorcycle", "spare part", "engine part"] },
+  { "key": "sports_entertainment", "name_en": "Sports & Entertainment", "name_ar": "الرياضة والترفيه",
+    "keywords": ["sport", "fitness", "gym", "yoga", "outdoor", "camping", "cycling", "fishing", "swim", "entertainment", "musical"] },
+  { "key": "jewelry_watches", "name_en": "Jewelry & Watches", "name_ar": "المجوهرات والساعات",
+    "keywords": ["jewel", "necklace", "bracelet", "ring", "earring", "watch", "eyewear", "sunglasses"] },
+  { "key": "toys_baby", "name_en": "Toys & Baby Items", "name_ar": "الألعاب ومستلزمات الأطفال",
+    "keywords": ["toy", "doll", "baby", "kids", "children", "game", "puzzle", "hobby", "pet toy", "plush"] }
+]
