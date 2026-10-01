@@ -1,1 +1,14 @@
-
+{
+  "_readme": "انسخ هذا الملف باسم جديد (مثلاً companies/acme.json) وعدّل القيم. الملفات التي تبدأ بـ _ تُتجاهل. احذف هذا الحقل _readme اختيارياً.",
+  "id": "acme",
+  "name": "Acme Store",
+  "name_ar": "متجر أكمي",
+  "enabled": true,
+  "type": "json",
+  "url": "https://example.com/products.json",
+  "headers": { "Authorization": "Bearer ${ACME_TOKEN}" },
+  "currency": "USD",
+  "limit": 1000,
+  "fields": { "id": "sku", "title": "name", "image": "img", "url": "link", "price": "price", "category": "type" },
+  "categoryMap": { "gadgets": "consumer_electronics" }
+}
