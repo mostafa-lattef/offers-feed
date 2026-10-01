@@ -1,12 +1,16 @@
-name: Update Feed From Alibaba
+name: Update Offers Feed
 
 on:
   schedule:
     - cron: "0 */12 * * *"   # كل 12 ساعة
-  workflow_dispatch: {}      # زر يدوي
+  workflow_dispatch: {}      # تشغيل يدوي
 
 permissions:
   contents: write
+
+concurrency:
+  group: update-feed
+  cancel-in-progress: false
 
 jobs:
   generate:
@@ -19,13 +23,8 @@ jobs:
 
       - name: Generate feed.json
         env:
-          ALIEXPRESS_APP_KEY: ${{ secrets.ALIEXPRESS_APP_KEY }}
-          ALIEXPRESS_APP_SECRET: ${{ secrets.ALIEXPRESS_APP_SECRET }}
-          ALIEXPRESS_TRACKING_ID: ${{ secrets.ALIEXPRESS_TRACKING_ID }}
-          ALIEXPRESS_REFRESH_TOKEN: ${{ secrets.ALIEXPRESS_REFRESH_TOKEN }}
-          ALIEXPRESS_ACCESS_TOKEN: ${{ secrets.ALIEXPRESS_ACCESS_TOKEN }}
-          ALIEXPRESS_TOKEN_EXPIRES_AT: ${{ secrets.ALIEXPRESS_TOKEN_EXPIRES_AT }}
-          ALIEXPRESS_USER_NICK: ${{ secrets.ALIEXPRESS_USER_NICK }}
+          # كل أسرار المستودع تُمرَّر هنا، فإضافة سرّ لشركة جديدة لا تحتاج تعديل هذا الملف
+          SECRETS_JSON: ${{ toJSON(secrets) }}
         run: node scripts/generate-feed.mjs
 
       - name: Commit & push
@@ -33,10 +32,13 @@ jobs:
           git config user.name "offers-bot"
           git config user.email "offers-bot@users.noreply.github.com"
           git add feed.json
-          git diff --staged --quiet || git commit -m "chore: refresh alibaba feed [skip ci]"
+          git diff --staged --quiet || git commit -m "chore: refresh offers feed [skip ci]"
           git push
 
-      - name: Trigger app sync
+      - name: Trigger MERCORA sync
+        env:
+          SITE_URL: ${{ secrets.SITE_URL }}
+          OFFERS_SYNC_TOKEN: ${{ secrets.OFFERS_SYNC_TOKEN }}
         run: |
-          curl -sS -X POST "${{ secrets.SITE_URL }}/api/public/sync-offers" \
-            -H "x-sync-token: ${{ secrets.OFFERS_SYNC_TOKEN }}" || true
+          if [ -z "$SITE_URL" ]; then echo "SITE_URL غير مضبوط — تخطي المزامنة"; exit 0; fi
+          curl -sS -f -X POST "$SITE_URL/api/public/sync-offers" -H "x-sync-token: $OFFERS_SYNC_TOKEN"
