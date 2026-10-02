@@ -1,0 +1,121 @@
+{
+  "id": "aliexpress",
+  "name": "AliExpress",
+  "name_ar": "علي إكسبريس",
+  "enabled": true,
+  "type": "aliexpress-affiliate",
+  "currency": "USD",
+  "site_url": "https://www.aliexpress.com",
+  "maxPages": 1,
+  "pageSize": 50,
+  "keywords": [
+    {
+      "q": "wireless bluetooth headphones",
+      "category": "consumer_electronics"
+    },
+    {
+      "q": "smart watch",
+      "category": "consumer_electronics"
+    },
+    {
+      "q": "led monitor",
+      "category": "consumer_electronics"
+    },
+    {
+      "q": "phone case",
+      "category": "phones_accessories"
+    },
+    {
+      "q": "power bank",
+      "category": "phones_accessories"
+    },
+    {
+      "q": "usb charger cable",
+      "category": "phones_accessories"
+    },
+    {
+      "q": "women dress",
+      "category": "apparel_accessories"
+    },
+    {
+      "q": "men sneakers",
+      "category": "apparel_accessories"
+    },
+    {
+      "q": "handbag",
+      "category": "apparel_accessories"
+    },
+    {
+      "q": "led lamp",
+      "category": "home_garden"
+    },
+    {
+      "q": "kitchen organizer",
+      "category": "home_garden"
+    },
+    {
+      "q": "garden tools",
+      "category": "home_garden"
+    },
+    {
+      "q": "lipstick",
+      "category": "beauty_personal_care"
+    },
+    {
+      "q": "makeup brush set",
+      "category": "beauty_personal_care"
+    },
+    {
+      "q": "hair care",
+      "category": "beauty_personal_care"
+    },
+    {
+      "q": "power tools",
+      "category": "industrial_machinery"
+    },
+    {
+      "q": "welding machine",
+      "category": "industrial_machinery"
+    },
+    {
+      "q": "car accessories",
+      "category": "vehicle_parts"
+    },
+    {
+      "q": "motorcycle parts",
+      "category": "vehicle_parts"
+    },
+    {
+      "q": "yoga mat",
+      "category": "sports_entertainment"
+    },
+    {
+      "q": "camping tent",
+      "category": "sports_entertainment"
+    },
+    {
+      "q": "fishing gear",
+      "category": "sports_entertainment"
+    },
+    {
+      "q": "necklace",
+      "category": "jewelry_watches"
+    },
+    {
+      "q": "bracelet",
+      "category": "jewelry_watches"
+    },
+    {
+      "q": "quartz watch",
+      "category": "jewelry_watches"
+    },
+    {
+      "q": "baby toys",
+      "category": "toys_baby"
+    },
+    {
+      "q": "kids puzzle",
+      "category": "toys_baby"
+    }
+  ]
+}
