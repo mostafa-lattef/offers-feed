@@ -30,21 +30,48 @@ async function main() {
   const companies = await loadCompanies();
   console.log(`🚀 الشركات المفعّلة: ${companies.length}`);
 
+  // حالة التدوير: مؤشر لكل شركة/تصنيف يتقدّم مع كل تشغيل، فيأخذ التشغيل التالي الدفعة التالية
+  const statePath = path.join(rootDir, "rotation-state.json");
+  const state = JSON.parse(await fs.readFile(statePath, "utf8").catch(() => "{}"));
+
   const items = [], seen = new Set(), report = [];
   for (const raw of companies) {
     const company = interpolate(raw);
     const stat = { company: company.id, fetched: 0, kept: 0, skipped: 0, error: null };
     try {
       const adapter = await loadAdapter(company.type);
+      const st = (state[company.id] ??= { cats: {}, page: 0 });
+      company._page = st.page; // للمحوّلات التي تقرأ صفحات (API)
       const rows = await adapter.fetchRaw(company);
       stat.fetched = rows.length;
-      let kept = 0;
+      const catCap = company.maxPerCategory ?? cfg.maxItemsPerCompanyCategory ?? 150;
+      const rotate = company.rotate ?? cfg.rotate ?? true;
+      const step = company.rotateStep ?? cfg.rotateStep ?? catCap;
+      const limit = company.limit ?? cfg.maxItemsPerCompany;
+
+      // 1) تطبيع كل الصفوف وتجميعها حسب التصنيف (بالترتيب الأصلي: الملف الأول ثم الثاني…)
+      const groups = new Map();
       for (const r of rows) {
-        if (kept >= (company.limit ?? cfg.maxItemsPerCompany)) break;
         const item = normalizeItem(r, company, taxonomy);
-        if (!item || seen.has(item.id) || (!item.category_key && !cfg.keepUncategorized)) { stat.skipped++; continue; }
-        seen.add(item.id); items.push(item); kept++;
+        if (!item || (!item.category_key && !cfg.keepUncategorized)) { stat.skipped++; continue; }
+        const ck = item.category_key ?? "_none";
+        (groups.get(ck) ?? groups.set(ck, []).get(ck)).push(item);
       }
+
+      // 2) من كل تصنيف: نافذة بحجم السقف تبدأ من المؤشر المحفوظ ثم يتقدّم المؤشر
+      let kept = 0;
+      for (const [ck, list] of groups) {
+        const n = list.length;
+        const start = rotate ? (st.cats[ck] ?? 0) % n : 0;
+        const take = Math.min(catCap, n);
+        for (let i = 0; i < take && kept < limit; i++) {
+          const item = list[(start + i) % n];
+          if (seen.has(item.id)) { stat.skipped++; continue; }
+          seen.add(item.id); items.push(item); kept++;
+        }
+        if (rotate) st.cats[ck] = (start + Math.min(step, n)) % n;
+      }
+      if (rotate) st.page = (st.page ?? 0) + 1;
       stat.kept = kept;
     } catch (e) {
       stat.error = e.message;
@@ -54,20 +81,21 @@ async function main() {
   }
 
   // توزيع على التصنيفات: سقف لكل تصنيف حتى لا يطغى تصنيف واحد على البقية
-  const perCat = new Map(), final = [];
+  const perCatTotal = new Map(), final = [];
   for (const it of items) {
     const k = it.category_key ?? "_none";
-    const n = perCat.get(k) ?? 0;
+    const n = perCatTotal.get(k) ?? 0;
     if (n >= cfg.maxItemsPerCategory) continue;
-    perCat.set(k, n + 1); final.push(it);
+    perCatTotal.set(k, n + 1); final.push(it);
   }
 
   const feed = {
     generated_at: new Date().toISOString(),
     companies: companies.map((c) => ({ ok: !report.find((r) => r.company === c.id)?.error, count: final.filter((i) => i.company === c.id).length, id: c.id, name: c.name ?? c.id, name_ar: c.name_ar ?? c.name ?? c.id, url: c.site_url ?? null, logo: c.logo ?? null, currency: c.currency ?? "USD" })),
-    taxonomy: taxonomy.map(({ key, name_en, name_ar }) => ({ key, name_en, name_ar })),
+    taxonomy: taxonomy.malls.map(({ key, name_en, name_ar, departments }) => ({ key, name_en, name_ar, departments: departments.map(({ key, name_en, name_ar }) => ({ key, name_en, name_ar })) })),
     items: final,
   };
+  await fs.writeFile(statePath, JSON.stringify(state, null, 2) + "\n");
   await fs.writeFile(path.join(rootDir, "feed.json"), JSON.stringify(feed, null, 2) + "\n");
 
   console.table(report);
