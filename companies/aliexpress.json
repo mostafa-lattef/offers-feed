@@ -11,111 +11,151 @@
   "keywords": [
     {
       "q": "wireless bluetooth headphones",
-      "category": "consumer_electronics"
+      "category": "technology_ai"
     },
     {
       "q": "smart watch",
-      "category": "consumer_electronics"
+      "category": "technology_ai"
     },
     {
       "q": "led monitor",
-      "category": "consumer_electronics"
+      "category": "technology_ai"
     },
     {
       "q": "phone case",
-      "category": "phones_accessories"
+      "category": "technology_ai"
     },
     {
       "q": "power bank",
-      "category": "phones_accessories"
+      "category": "technology_ai"
     },
     {
       "q": "usb charger cable",
-      "category": "phones_accessories"
+      "category": "technology_ai"
     },
     {
       "q": "women dress",
-      "category": "apparel_accessories"
+      "category": "fashion"
     },
     {
       "q": "men sneakers",
-      "category": "apparel_accessories"
+      "category": "fashion"
     },
     {
       "q": "handbag",
-      "category": "apparel_accessories"
+      "category": "fashion"
     },
     {
       "q": "led lamp",
-      "category": "home_garden"
+      "category": "home_living"
     },
     {
       "q": "kitchen organizer",
-      "category": "home_garden"
+      "category": "home_living"
     },
     {
       "q": "garden tools",
-      "category": "home_garden"
+      "category": "home_living"
     },
     {
       "q": "lipstick",
-      "category": "beauty_personal_care"
+      "category": "fashion"
     },
     {
       "q": "makeup brush set",
-      "category": "beauty_personal_care"
+      "category": "fashion"
     },
     {
       "q": "hair care",
-      "category": "beauty_personal_care"
+      "category": "fashion"
     },
     {
       "q": "power tools",
-      "category": "industrial_machinery"
+      "category": "business_industry"
     },
     {
       "q": "welding machine",
-      "category": "industrial_machinery"
+      "category": "business_industry"
     },
     {
       "q": "car accessories",
-      "category": "vehicle_parts"
+      "category": "mobility_energy"
     },
     {
       "q": "motorcycle parts",
-      "category": "vehicle_parts"
+      "category": "mobility_energy"
     },
     {
       "q": "yoga mat",
-      "category": "sports_entertainment"
+      "category": "kids_sports_leisure"
     },
     {
       "q": "camping tent",
-      "category": "sports_entertainment"
+      "category": "kids_sports_leisure"
     },
     {
       "q": "fishing gear",
-      "category": "sports_entertainment"
+      "category": "kids_sports_leisure"
     },
     {
       "q": "necklace",
-      "category": "jewelry_watches"
+      "category": "fashion"
     },
     {
       "q": "bracelet",
-      "category": "jewelry_watches"
+      "category": "fashion"
     },
     {
       "q": "quartz watch",
-      "category": "jewelry_watches"
+      "category": "fashion"
     },
     {
       "q": "baby toys",
-      "category": "toys_baby"
+      "category": "kids_sports_leisure"
     },
     {
       "q": "kids puzzle",
-      "category": "toys_baby"
+      "category": "kids_sports_leisure"
+    },
+    {
+      "q": "blood pressure monitor",
+      "category": "health_wellness"
+    },
+    {
+      "q": "massage gun",
+      "category": "health_wellness"
+    },
+    {
+      "q": "first aid kit",
+      "category": "health_wellness"
+    },
+    {
+      "q": "solar panel",
+      "category": "mobility_energy"
+    },
+    {
+      "q": "electric scooter",
+      "category": "mobility_energy"
+    },
+    {
+      "q": "portable power station",
+      "category": "mobility_energy"
+    },
+    {
+      "q": "pet bed",
+      "category": "food_farm_pets"
+    },
+    {
+      "q": "dog leash",
+      "category": "food_farm_pets"
+    },
+    {
+      "q": "garden seeds",
+      "category": "food_farm_pets"
+    },
+    {
+      "q": "school backpack",
+      "category": "kids_sports_leisure"
     }
   ]
 }

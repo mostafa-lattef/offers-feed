@@ -15,33 +15,5 @@
     "url": "deep_link",
     "category": "category_name"
   },
-  "categoryMap": {
-    "school & office supplies": "consumer_electronics",
-    "consumer electronics": "consumer_electronics",
-    "electronics": "consumer_electronics",
-    "phones & accessories": "phones_accessories",
-    "apparel": "apparel_accessories",
-    "fashion": "apparel_accessories",
-    "shoes & accessories": "apparel_accessories",
-    "home & garden": "home_garden",
-    "furniture": "home_garden",
-    "home appliances": "home_garden",
-    "beauty & personal care": "beauty_personal_care",
-    "cosmetics": "beauty_personal_care",
-    "beauty": "beauty_personal_care",
-    "industrial machinery": "industrial_machinery",
-    "tools": "industrial_machinery",
-    "hardware": "industrial_machinery",
-    "construction & real estate": "industrial_machinery",
-    "fabrication services": "industrial_machinery",
-    "commercial equipment & machinery": "industrial_machinery",
-    "packaging & printing": "industrial_machinery",
-    "sports & entertainment": "sports_entertainment",
-    "fitness": "sports_entertainment",
-    "vehicle parts & accessories": "vehicle_parts",
-    "automobiles & motorcycles": "vehicle_parts",
-    "jewelry & watches": "jewelry_watches",
-    "jewelry eyewear watches & accessories": "jewelry_watches",
-    "toys & hobbies": "toys_baby"
-  }
+  "categoryMap": {}
 }
