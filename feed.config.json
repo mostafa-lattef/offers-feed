@@ -1,5 +1,7 @@
 {
   "maxItemsPerCompany": 2000,
-  "maxItemsPerCategory": 300,
-  "keepUncategorized": false
+  "maxItemsPerCompanyCategory": 150,
+  "maxItemsPerCategory": 1000,
+  "keepUncategorized": false,
+  "rotate": true
 }

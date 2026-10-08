@@ -1,57 +1,6 @@
 {
-  "generated_at": "2026-09-30T23:31:05.531Z",
+  "generated_at": null,
   "companies": [],
-  "taxonomy": [
-    {
-      "key": "consumer_electronics",
-      "name_en": "Consumer Electronics",
-      "name_ar": "الإلكترونيات"
-    },
-    {
-      "key": "phones_accessories",
-      "name_en": "Phones & Accessories",
-      "name_ar": "الهواتف وملحقاتها"
-    },
-    {
-      "key": "apparel_accessories",
-      "name_en": "Apparel & Accessories",
-      "name_ar": "الأزياء والملابس"
-    },
-    {
-      "key": "home_garden",
-      "name_en": "Home & Garden",
-      "name_ar": "المنزل والحديقة"
-    },
-    {
-      "key": "beauty_personal_care",
-      "name_en": "Beauty & Personal Care",
-      "name_ar": "الجمال والعناية الشخصية"
-    },
-    {
-      "key": "industrial_machinery",
-      "name_en": "Industrial Machinery",
-      "name_ar": "المعدات والآلات الصناعية"
-    },
-    {
-      "key": "vehicle_parts",
-      "name_en": "Vehicle Parts",
-      "name_ar": "قطع المركبات"
-    },
-    {
-      "key": "sports_entertainment",
-      "name_en": "Sports & Entertainment",
-      "name_ar": "الرياضة والترفيه"
-    },
-    {
-      "key": "jewelry_watches",
-      "name_en": "Jewelry & Watches",
-      "name_ar": "المجوهرات والساعات"
-    },
-    {
-      "key": "toys_baby",
-      "name_en": "Toys & Baby Items",
-      "name_ar": "الألعاب ومستلزمات الأطفال"
-    }
-  ],
+  "taxonomy": [],
   "items": []
 }

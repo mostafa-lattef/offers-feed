@@ -1,0 +1,322 @@
+{
+ "agriculture": {
+  "mall": "food_farm_pets",
+  "department": "agriculture"
+ },
+ "apparel & accessories": {
+  "mall": "fashion",
+  "department": "apparel-general"
+ },
+ "auto accessories": {
+  "mall": "mobility_energy",
+  "department": "auto-parts-accessories"
+ },
+ "bags": {
+  "mall": "fashion",
+  "department": "bags-luggage"
+ },
+ "beauty": {
+  "mall": "fashion",
+  "department": "beauty-fragrance"
+ },
+ "beauty & care": {
+  "mall": "fashion",
+  "department": "beauty-fragrance"
+ },
+ "commercial equipment & machinery": {
+  "mall": "business_industry",
+  "department": "commercial-equipment"
+ },
+ "construction & building machinery": {
+  "mall": "business_industry",
+  "department": "construction-machinery"
+ },
+ "construction & real estate": {
+  "mall": "business_industry",
+  "department": "construction-materials"
+ },
+ "consumer electronics": {
+  "mall": "technology_ai",
+  "department": "consumer-electronics"
+ },
+ "electronics": {
+  "mall": "technology_ai",
+  "department": "consumer-electronics"
+ },
+ "fabric & textile raw material": {
+  "mall": "business_industry",
+  "department": "materials-textiles"
+ },
+ "fabrication services": {
+  "mall": "business_industry",
+  "department": "industrial-services"
+ },
+ "food & beverage": {
+  "mall": "food_farm_pets",
+  "department": "food-beverage"
+ },
+ "fragrances": {
+  "mall": "fashion",
+  "department": "beauty-fragrance"
+ },
+ "frequently searchedcamera": {
+  "mall": "technology_ai",
+  "department": "consumer-electronics"
+ },
+ "frequently searcheddrones": {
+  "mall": "technology_ai",
+  "department": "consumer-electronics"
+ },
+ "frequently searchedearbuds": {
+  "mall": "technology_ai",
+  "department": "consumer-electronics"
+ },
+ "frequently searchedelectric motorcycles": {
+  "mall": "mobility_energy",
+  "department": "electric-mobility"
+ },
+ "frequently searchedelectric scooters": {
+  "mall": "mobility_energy",
+  "department": "electric-mobility"
+ },
+ "frequently searchedhoodies": {
+  "mall": "fashion",
+  "department": "mens-fashion"
+ },
+ "frequently searchedlaptops": {
+  "mall": "technology_ai",
+  "department": "computers-laptops"
+ },
+ "frequently searchedsandals": {
+  "mall": "fashion",
+  "department": "shoes"
+ },
+ "frequently searchedsneakers": {
+  "mall": "fashion",
+  "department": "shoes"
+ },
+ "frequently searchedsunglasses": {
+  "mall": "fashion",
+  "department": "jewelry-accessories"
+ },
+ "furniture": {
+  "mall": "home_living",
+  "department": "furniture-home"
+ },
+ "gifts & crafts": {
+  "mall": "home_living",
+  "department": "gifts-lifestyle"
+ },
+ "groceries": {
+  "mall": "food_farm_pets",
+  "department": "food-beverage"
+ },
+ "health care": {
+  "mall": "health_wellness",
+  "department": "health-care"
+ },
+ "home & furniture": {
+  "mall": "home_living",
+  "department": "furniture-home"
+ },
+ "home & garden": {
+  "mall": "home_living",
+  "department": "home-garden"
+ },
+ "home appliances": {
+  "mall": "home_living",
+  "department": "home-appliances"
+ },
+ "hookah & accessories": {
+  "mall": "home_living",
+  "department": "gifts-lifestyle"
+ },
+ "jewelery": {
+  "mall": "fashion",
+  "department": "jewelry-accessories"
+ },
+ "jewelry & accessories": {
+  "mall": "fashion",
+  "department": "jewelry-accessories"
+ },
+ "jewelry & rings": {
+  "mall": "fashion",
+  "department": "jewelry-accessories"
+ },
+ "jewelry eyewear watches & accessories": {
+  "mall": "fashion",
+  "department": "jewelry-accessories"
+ },
+ "kids": {
+  "mall": "kids_sports_leisure",
+  "department": "kids-toys"
+ },
+ "kitchen & tools": {
+  "mall": "home_living",
+  "department": "kitchen-dining"
+ },
+ "lights & lighting": {
+  "mall": "home_living",
+  "department": "lighting"
+ },
+ "living room furniture": {
+  "mall": "home_living",
+  "department": "furniture-home"
+ },
+ "luggage bags & cases": {
+  "mall": "fashion",
+  "department": "bags-luggage"
+ },
+ "medical devices & supplies": {
+  "mall": "health_wellness",
+  "department": "medical-devices"
+ },
+ "men's clothing": {
+  "mall": "fashion",
+  "department": "mens-fashion"
+ },
+ "men's fashion": {
+  "mall": "fashion",
+  "department": "mens-fashion"
+ },
+ "mobiles & devices": {
+  "mall": "technology_ai",
+  "department": "mobile-smart-devices"
+ },
+ "mother kids & toys": {
+  "mall": "kids_sports_leisure",
+  "department": "kids-toys"
+ },
+ "packaging & printing": {
+  "mall": "business_industry",
+  "department": "packaging-printing"
+ },
+ "perfumes": {
+  "mall": "fashion",
+  "department": "beauty-fragrance"
+ },
+ "personal care & household cleaning": {
+  "mall": "home_living",
+  "department": "household-cleaning"
+ },
+ "pet supplies": {
+  "mall": "food_farm_pets",
+  "department": "pet-supplies"
+ },
+ "renewable energy": {
+  "mall": "mobility_energy",
+  "department": "renewable-energy"
+ },
+ "safety": {
+  "mall": "business_industry",
+  "department": "safety-protection"
+ },
+ "school & office supplies": {
+  "mall": "kids_sports_leisure",
+  "department": "school-supplies"
+ },
+ "shoes": {
+  "mall": "fashion",
+  "department": "shoes"
+ },
+ "shoes & accessories": {
+  "mall": "fashion",
+  "department": "shoes"
+ },
+ "smartphones & mobile": {
+  "mall": "technology_ai",
+  "department": "mobile-smart-devices"
+ },
+ "sports & entertainment": {
+  "mall": "kids_sports_leisure",
+  "department": "sports-equipment"
+ },
+ "sports & fitness": {
+  "mall": "kids_sports_leisure",
+  "department": "sports-equipment"
+ },
+ "sportswear & outdoor apparel": {
+  "mall": "fashion",
+  "department": "sportswear"
+ },
+ "tools & hardware": {
+  "mall": "business_industry",
+  "department": "tools-hardware"
+ },
+ "toys & baby items": {
+  "mall": "kids_sports_leisure",
+  "department": "kids-toys"
+ },
+ "vehicles & transportation": {
+  "mall": "mobility_energy",
+  "department": "vehicles-transportation"
+ },
+ "watches": {
+  "mall": "fashion",
+  "department": "jewelry-accessories"
+ },
+ "women's clothing": {
+  "mall": "fashion",
+  "department": "womens-fashion"
+ },
+ "women's fashion": {
+  "mall": "fashion",
+  "department": "womens-fashion"
+ },
+ "women's fashion sets": {
+  "mall": "fashion",
+  "department": "womens-fashion"
+ },
+ "أجهزة الكمبيوتر المحمولة": {
+  "mall": "technology_ai",
+  "department": "computers-laptops"
+ },
+ "احذية رجالية": {
+  "mall": "fashion",
+  "department": "shoes"
+ },
+ "احذية نسائية": {
+  "mall": "fashion",
+  "department": "shoes"
+ },
+ "الدراجات البخارية الكهربائية": {
+  "mall": "mobility_energy",
+  "department": "electric-mobility"
+ },
+ "الكمبيوتر": {
+  "mall": "technology_ai",
+  "department": "computers-laptops"
+ },
+ "بيجامة نسائية": {
+  "mall": "fashion",
+  "department": "underwear-sleepwear"
+ },
+ "جينز للرجال": {
+  "mall": "fashion",
+  "department": "mens-fashion"
+ },
+ "دراجة": {
+  "mall": "mobility_energy",
+  "department": "electric-mobility"
+ },
+ "عباية": {
+  "mall": "fashion",
+  "department": "womens-fashion"
+ },
+ "فساتين السهرة": {
+  "mall": "fashion",
+  "department": "womens-fashion"
+ },
+ "فستان الليل": {
+  "mall": "fashion",
+  "department": "womens-fashion"
+ },
+ "قبعة": {
+  "mall": "fashion",
+  "department": "jewelry-accessories"
+ },
+ "مجموعة الملابس الداخلية": {
+  "mall": "fashion",
+  "department": "underwear-sleepwear"
+ }
+}

@@ -1,22 +1,637 @@
 [
-  { "key": "consumer_electronics", "name_en": "Consumer Electronics", "name_ar": "الإلكترونيات",
-    "keywords": ["electronic", "laptop", "computer", "camera", "speaker", "headphone", "earphone", "monitor", "led", "tv", "gadget", "school & office", "smart watch", "drone", "router"] },
-  { "key": "phones_accessories", "name_en": "Phones & Accessories", "name_ar": "الهواتف وملحقاتها",
-    "keywords": ["phone", "smartphone", "mobile", "charger", "power bank", "cable", "case", "screen protector", "tablet"] },
-  { "key": "apparel_accessories", "name_en": "Apparel & Accessories", "name_ar": "الأزياء والملابس",
-    "keywords": ["apparel", "clothing", "clothes", "fashion", "dress", "shirt", "jacket", "jeans", "hoodie", "shoes", "sneaker", "bag", "handbag", "hat", "scarf", "underwear"] },
-  { "key": "home_garden", "name_en": "Home & Garden", "name_ar": "المنزل والحديقة",
-    "keywords": ["home", "garden", "furniture", "kitchen", "sofa", "table", "chair", "lamp", "curtain", "vase", "bedding", "storage", "appliance", "tools & home", "decor"] },
-  { "key": "beauty_personal_care", "name_en": "Beauty & Personal Care", "name_ar": "الجمال والعناية الشخصية",
-    "keywords": ["beauty", "cosmetic", "makeup", "lipstick", "skin", "cream", "hair", "perfume", "nail", "shampoo", "personal care"] },
-  { "key": "industrial_machinery", "name_en": "Industrial Machinery", "name_ar": "المعدات والآلات الصناعية",
-    "keywords": ["machinery", "industrial", "machine", "motor", "pump", "weld", "hardware", "tool", "construction", "packaging", "printing", "fabrication", "commercial equipment"] },
-  { "key": "vehicle_parts", "name_en": "Vehicle Parts", "name_ar": "قطع المركبات",
-    "keywords": ["vehicle", "automobile", "automotive", "car part", "car accessor", "auto part", "tire", "brake", "motorcycle", "spare part", "engine part"] },
-  { "key": "sports_entertainment", "name_en": "Sports & Entertainment", "name_ar": "الرياضة والترفيه",
-    "keywords": ["sport", "fitness", "gym", "yoga", "outdoor", "camping", "cycling", "fishing", "swim", "entertainment", "musical"] },
-  { "key": "jewelry_watches", "name_en": "Jewelry & Watches", "name_ar": "المجوهرات والساعات",
-    "keywords": ["jewel", "necklace", "bracelet", "ring", "earring", "watch", "eyewear", "sunglasses"] },
-  { "key": "toys_baby", "name_en": "Toys & Baby Items", "name_ar": "الألعاب ومستلزمات الأطفال",
-    "keywords": ["toy", "doll", "baby", "kids", "children", "game", "puzzle", "hobby", "pet toy", "plush"] }
+ {
+  "key": "fashion",
+  "name_en": "Fashion Mall",
+  "name_ar": "فاشون مول",
+  "departments": [
+   {
+    "key": "womens-fashion",
+    "name_en": "Women's Fashion",
+    "name_ar": "أزياء نسائية",
+    "keywords": [
+     "women",
+     "dress",
+     "abaya",
+     "gown",
+     "skirt",
+     "blouse",
+     "فستان",
+     "عباية",
+     "نسائي"
+    ]
+   },
+   {
+    "key": "mens-fashion",
+    "name_en": "Men's Fashion",
+    "name_ar": "أزياء رجالية",
+    "keywords": [
+     "men's",
+     "mens",
+     "jeans",
+     "hoodie",
+     "t-shirt",
+     "suit",
+     "رجال",
+     "جينز"
+    ]
+   },
+   {
+    "key": "shoes",
+    "name_en": "Shoes",
+    "name_ar": "أحذية",
+    "keywords": [
+     "shoe",
+     "sneaker",
+     "sandal",
+     "boot",
+     "heels",
+     "حذاء",
+     "أحذية",
+     "احذية"
+    ]
+   },
+   {
+    "key": "bags-luggage",
+    "name_en": "Bags & Luggage",
+    "name_ar": "حقائب وسفر",
+    "keywords": [
+     "bag",
+     "handbag",
+     "backpack",
+     "luggage",
+     "wallet",
+     "حقيبة",
+     "حقائب"
+    ]
+   },
+   {
+    "key": "jewelry-accessories",
+    "name_en": "Jewelry & Accessories",
+    "name_ar": "مجوهرات وإكسسوارات",
+    "keywords": [
+     "jewel",
+     "necklace",
+     "bracelet",
+     "ring",
+     "earring",
+     "watch",
+     "sunglasses",
+     "eyewear",
+     "hat",
+     "scarf",
+     "ساعة",
+     "ساعات",
+     "مجوهرات",
+     "قبعة",
+     "نظارة"
+    ]
+   },
+   {
+    "key": "beauty-fragrance",
+    "name_en": "Beauty & Fragrance",
+    "name_ar": "جمال وعطور",
+    "keywords": [
+     "beauty",
+     "cosmetic",
+     "makeup",
+     "lipstick",
+     "skin",
+     "cream",
+     "hair",
+     "perfume",
+     "fragrance",
+     "nail",
+     "عطر",
+     "عطور",
+     "جمال",
+     "مكياج"
+    ]
+   },
+   {
+    "key": "sportswear",
+    "name_en": "Sportswear",
+    "name_ar": "ملابس رياضية",
+    "keywords": [
+     "sportswear",
+     "activewear",
+     "leggings",
+     "tracksuit",
+     "ملابس رياضية"
+    ]
+   },
+   {
+    "key": "underwear-sleepwear",
+    "name_en": "Underwear & Sleepwear",
+    "name_ar": "ملابس داخلية ونوم",
+    "keywords": [
+     "underwear",
+     "lingerie",
+     "pajama",
+     "pyjama",
+     "sleepwear",
+     "bra",
+     "بيجامة",
+     "ملابس داخلية"
+    ]
+   },
+   {
+    "key": "apparel-general",
+    "name_en": "Apparel (General)",
+    "name_ar": "ملابس عامة",
+    "keywords": [
+     "apparel",
+     "clothing",
+     "clothes",
+     "fashion",
+     "ملابس",
+     "أزياء"
+    ]
+   }
+  ]
+ },
+ {
+  "key": "technology_ai",
+  "name_en": "Technology & AI Mall",
+  "name_ar": "تكنولوجي آند AI مول",
+  "departments": [
+   {
+    "key": "mobile-smart-devices",
+    "name_en": "Mobile & Smart Devices",
+    "name_ar": "هواتف وأجهزة ذكية",
+    "keywords": [
+     "phone",
+     "smartphone",
+     "mobile",
+     "charger",
+     "power bank",
+     "cable",
+     "case",
+     "tablet",
+     "smart watch",
+     "smartwatch",
+     "هاتف",
+     "هواتف",
+     "جوال",
+     "شاحن"
+    ]
+   },
+   {
+    "key": "computers-laptops",
+    "name_en": "Computers & Laptops",
+    "name_ar": "كمبيوتر ولابتوب",
+    "keywords": [
+     "laptop",
+     "computer",
+     "pc",
+     "keyboard",
+     "mouse",
+     "monitor",
+     "كمبيوتر",
+     "لابتوب"
+    ]
+   },
+   {
+    "key": "consumer-electronics",
+    "name_en": "Consumer Electronics",
+    "name_ar": "إلكترونيات استهلاكية",
+    "keywords": [
+     "electronic",
+     "camera",
+     "speaker",
+     "headphone",
+     "earphone",
+     "earbuds",
+     "drone",
+     "tv",
+     "gadget",
+     "router",
+     "led",
+     "ai ",
+     "إلكترون",
+     "سماعة",
+     "كاميرا"
+    ]
+   }
+  ]
+ },
+ {
+  "key": "home_living",
+  "name_en": "Home & Living Mall",
+  "name_ar": "هوم آند ليفنج مول",
+  "departments": [
+   {
+    "key": "furniture-home",
+    "name_en": "Furniture & Home",
+    "name_ar": "أثاث ومنزل",
+    "keywords": [
+     "furniture",
+     "sofa",
+     "table",
+     "chair",
+     "bed",
+     "curtain",
+     "bedding",
+     "storage",
+     "decor",
+     "أثاث",
+     "منزل"
+    ]
+   },
+   {
+    "key": "kitchen-dining",
+    "name_en": "Kitchen & Dining",
+    "name_ar": "مطبخ وسفرة",
+    "keywords": [
+     "kitchen",
+     "cookware",
+     "tableware",
+     "utensil",
+     "مطبخ"
+    ]
+   },
+   {
+    "key": "home-appliances",
+    "name_en": "Home Appliances",
+    "name_ar": "أجهزة منزلية",
+    "keywords": [
+     "appliance",
+     "vacuum",
+     "blender",
+     "fridge",
+     "washer",
+     "microwave",
+     "أجهزة منزلية"
+    ]
+   },
+   {
+    "key": "lighting",
+    "name_en": "Lighting",
+    "name_ar": "إضاءة",
+    "keywords": [
+     "lamp",
+     "lighting",
+     "light bulb",
+     "chandelier",
+     "إضاءة"
+    ]
+   },
+   {
+    "key": "home-garden",
+    "name_en": "Home & Garden",
+    "name_ar": "منزل وحديقة",
+    "keywords": [
+     "garden",
+     "outdoor furniture",
+     "planter",
+     "حديقة"
+    ]
+   },
+   {
+    "key": "gifts-lifestyle",
+    "name_en": "Gifts & Lifestyle",
+    "name_ar": "هدايا ونمط حياة",
+    "keywords": [
+     "gift",
+     "craft",
+     "hookah",
+     "souvenir",
+     "هدايا",
+     "حرف"
+    ]
+   },
+   {
+    "key": "household-cleaning",
+    "name_en": "Household & Cleaning",
+    "name_ar": "تنظيف ومستلزمات منزلية",
+    "keywords": [
+     "cleaning",
+     "household",
+     "detergent",
+     "mop",
+     "تنظيف"
+    ]
+   }
+  ]
+ },
+ {
+  "key": "business_industry",
+  "name_en": "Business & Industry Mall",
+  "name_ar": "بيزنس آند إندستري مول",
+  "departments": [
+   {
+    "key": "commercial-equipment",
+    "name_en": "Commercial Equipment & Machinery",
+    "name_ar": "معدات وآلات تجارية",
+    "keywords": [
+     "commercial",
+     "machinery",
+     "industrial",
+     "machine",
+     "weld",
+     "pump",
+     "motor",
+     "معدات",
+     "آلات"
+    ]
+   },
+   {
+    "key": "construction-machinery",
+    "name_en": "Construction Machinery",
+    "name_ar": "آلات البناء",
+    "keywords": [
+     "excavator",
+     "crane",
+     "construction machinery",
+     "concrete mixer",
+     "bulldozer"
+    ]
+   },
+   {
+    "key": "construction-materials",
+    "name_en": "Construction & Building Materials",
+    "name_ar": "البناء ومواد البناء",
+    "keywords": [
+     "construction",
+     "building material",
+     "cement",
+     "tile",
+     "pipe",
+     "real estate",
+     "البناء"
+    ]
+   },
+   {
+    "key": "materials-textiles",
+    "name_en": "Materials & Textiles",
+    "name_ar": "مواد خام ونسيج",
+    "keywords": [
+     "fabric",
+     "textile",
+     "raw material",
+     "yarn",
+     "قماش",
+     "نسيج"
+    ]
+   },
+   {
+    "key": "industrial-services",
+    "name_en": "Industrial Services",
+    "name_ar": "خدمات صناعية",
+    "keywords": [
+     "fabrication",
+     "cnc",
+     "machining",
+     "casting",
+     "خدمات التصنيع"
+    ]
+   },
+   {
+    "key": "packaging-printing",
+    "name_en": "Packaging & Printing",
+    "name_ar": "تعبئة وطباعة",
+    "keywords": [
+     "packaging",
+     "printing",
+     "box",
+     "label",
+     "تعبئة",
+     "طباعة"
+    ]
+   },
+   {
+    "key": "safety-protection",
+    "name_en": "Safety & Protection",
+    "name_ar": "سلامة وحماية",
+    "keywords": [
+     "safety",
+     "protective",
+     "helmet",
+     "gloves",
+     "fire",
+     "سلامة"
+    ]
+   },
+   {
+    "key": "tools-hardware",
+    "name_en": "Tools & Hardware",
+    "name_ar": "أدوات ومعدات",
+    "keywords": [
+     "tool",
+     "hardware",
+     "drill",
+     "wrench",
+     "screw",
+     "أدوات"
+    ]
+   }
+  ]
+ },
+ {
+  "key": "mobility_energy",
+  "name_en": "Mobility & Energy Mall",
+  "name_ar": "موبيليتي آند إنرجي مول",
+  "departments": [
+   {
+    "key": "auto-parts-accessories",
+    "name_en": "Auto Parts & Accessories",
+    "name_ar": "قطع وإكسسوارات السيارات",
+    "keywords": [
+     "auto",
+     "car part",
+     "car accessor",
+     "automotive",
+     "tire",
+     "brake",
+     "spare part",
+     "motorcycle part",
+     "سيارات",
+     "سيارة"
+    ]
+   },
+   {
+    "key": "vehicles-transportation",
+    "name_en": "Vehicles & Transportation",
+    "name_ar": "مركبات ونقل",
+    "keywords": [
+     "vehicle",
+     "truck",
+     "bus",
+     "trailer",
+     "transportation",
+     "مركبات"
+    ]
+   },
+   {
+    "key": "electric-mobility",
+    "name_en": "Electric Mobility",
+    "name_ar": "تنقّل كهربائي",
+    "keywords": [
+     "electric scooter",
+     "electric motorcycle",
+     "e-bike",
+     "electric bike",
+     "scooter",
+     "bicycle",
+     "دراجة",
+     "دراجات"
+    ]
+   },
+   {
+    "key": "renewable-energy",
+    "name_en": "Renewable Energy",
+    "name_ar": "طاقة متجددة",
+    "keywords": [
+     "solar",
+     "renewable",
+     "inverter",
+     "battery",
+     "wind turbine",
+     "طاقة"
+    ]
+   }
+  ]
+ },
+ {
+  "key": "health_wellness",
+  "name_en": "Health & Wellness Mall",
+  "name_ar": "هيلث آند ويلنس مول",
+  "departments": [
+   {
+    "key": "health-care",
+    "name_en": "Health Care",
+    "name_ar": "رعاية صحية",
+    "keywords": [
+     "health",
+     "care",
+     "wellness",
+     "vitamin",
+     "supplement",
+     "massage",
+     "blood pressure",
+     "صحة"
+    ]
+   },
+   {
+    "key": "medical-devices",
+    "name_en": "Medical Devices & Supplies",
+    "name_ar": "أجهزة ومستلزمات طبية",
+    "keywords": [
+     "medical",
+     "surgical",
+     "thermometer",
+     "wheelchair",
+     "طبي",
+     "طبية"
+    ]
+   }
+  ]
+ },
+ {
+  "key": "kids_sports_leisure",
+  "name_en": "Kids, Sports & Leisure Mall",
+  "name_ar": "كيدز سبورتس آند ليجر مول",
+  "departments": [
+   {
+    "key": "kids-toys",
+    "name_en": "Kids & Toys",
+    "name_ar": "أطفال وألعاب",
+    "keywords": [
+     "toy",
+     "doll",
+     "baby",
+     "kids",
+     "children",
+     "puzzle",
+     "game",
+     "plush",
+     "ألعاب",
+     "أطفال",
+     "لعبة"
+    ]
+   },
+   {
+    "key": "sports-equipment",
+    "name_en": "Sports Equipment",
+    "name_ar": "معدات رياضية",
+    "keywords": [
+     "sport",
+     "fitness",
+     "gym",
+     "yoga",
+     "camping",
+     "fishing",
+     "cycling",
+     "swim",
+     "outdoor",
+     "entertainment",
+     "رياضة",
+     "رياضي"
+    ]
+   },
+   {
+    "key": "school-supplies",
+    "name_en": "School Supplies",
+    "name_ar": "مستلزمات مدرسية",
+    "keywords": [
+     "school",
+     "stationery",
+     "notebook",
+     "pencil",
+     "office supplies",
+     "backpack school",
+     "مدرسة",
+     "قرطاسية"
+    ]
+   }
+  ]
+ },
+ {
+  "key": "food_farm_pets",
+  "name_en": "Food, Farm & Pets Mall",
+  "name_ar": "فود فارم آند بتس مول",
+  "departments": [
+   {
+    "key": "agriculture",
+    "name_en": "Agriculture",
+    "name_ar": "زراعة",
+    "keywords": [
+     "agricultur",
+     "farm",
+     "seed",
+     "fertilizer",
+     "tractor",
+     "زراعة"
+    ]
+   },
+   {
+    "key": "food-beverage",
+    "name_en": "Food & Beverage",
+    "name_ar": "أغذية ومشروبات",
+    "keywords": [
+     "food",
+     "beverage",
+     "snack",
+     "coffee",
+     "tea",
+     "grocer",
+     "drink",
+     "طعام",
+     "أغذية",
+     "مشروبات"
+    ]
+   },
+   {
+    "key": "pet-supplies",
+    "name_en": "Pet Supplies",
+    "name_ar": "مستلزمات الحيوانات الأليفة",
+    "keywords": [
+     "pet",
+     "dog",
+     "cat",
+     "aquarium",
+     "حيوانات"
+    ]
+   }
+  ]
+ }
 ]
