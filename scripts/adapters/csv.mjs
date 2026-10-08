@@ -1,4 +1,4 @@
-import { getText } from "../lib/http.mjs";
+import { getText, readLocal } from "../lib/http.mjs";
 
 function parseCsv(text) {
   const rows = []; let row = [], cur = "", q = false;
@@ -22,9 +22,14 @@ function parseCsv(text) {
   return rows;
 }
 
-/** فيد CSV برأس الأعمدة في السطر الأول. */
+/** CSV برأس الأعمدة في السطر الأول: من رابط (url) أو من ملف/مجلد داخل المستودع (path). */
 export async function fetchRaw(company) {
-  const [head, ...rest] = parseCsv(await getText(company.url, company.headers));
-  if (!head) return [];
-  return rest.map((r) => Object.fromEntries(head.map((h, i) => [h.trim(), r[i] ?? ""])));
+  const texts = company.path ? await readLocal(company.path, ".csv") : [await getText(company.url, company.headers)];
+  const out = [];
+  for (const text of texts) {
+    const [head, ...rest] = parseCsv(text);
+    if (!head) continue;
+    for (const r of rest) out.push(Object.fromEntries(head.map((h, i) => [h.trim(), r[i] ?? ""])));
+  }
+  return out;
 }

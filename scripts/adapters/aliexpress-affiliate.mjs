@@ -55,11 +55,14 @@ function makeClient(prefix) {
 
 export async function fetchRaw(company) {
   const client = makeClient(company.envPrefix ?? "ALIEXPRESS_");
-  const keywords = company.keywords?.length ? company.keywords : ["trending"];
+  // كل كلمة: نص، أو { "q": "...", "category": "<مفتاح التصنيف>" } لتثبيت تصنيف النتائج
+  const keywords = (company.keywords?.length ? company.keywords : ["trending"]).map((k) => (typeof k === "string" ? { q: k } : k));
   const maxPages = company.maxPages ?? 2, pageSize = company.pageSize ?? 50;
+  const rotatePages = company.rotatePages ?? 6; // كل تشغيل يبدأ من صفحة تالية، ثم يعود للأولى
+  const firstPage = ((company._page ?? 0) % rotatePages) * maxPages + 1;
   const out = [];
-  for (const kw of keywords) {
-    for (let page = 1; page <= maxPages; page++) {
+  for (const { q: kw, category: hint } of keywords) {
+    for (let page = firstPage; page < firstPage + maxPages; page++) {
       const { products, total } = await client.query({
         keywords: kw, page_no: page, page_size: pageSize,
         target_currency: company.currency ?? "USD", target_language: "EN", tracking_id: client.tracking,
@@ -76,6 +79,7 @@ export async function fetchRaw(company) {
           image: imgs[0] ?? p.product_main_image_url,
           url: p.promotion_link ?? p.product_detail_url,
           category: p.second_level_category_name ?? p.first_level_category_name,
+          category_hint: hint,
         });
       }
       if (page * pageSize >= total) break;
